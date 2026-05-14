@@ -77,11 +77,13 @@ Reset Challenge
 
 </section>
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
+  apiKey: "AIzaSyACHSsLJFfFdB44aCLsNKg6yqNMZ39Erwo",
   authDomain: "maxi-capital.firebaseapp.com",
   projectId: "maxi-capital",
   storageBucket: "maxi-capital.firebasestorage.app",
@@ -92,25 +94,40 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const accountSize = document.getElementById("account-size");
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // user is logged in
-    const params = new URLSearchParams(window.location.search);
-    const plan = params.get("plan");
+onAuthStateChanged(auth, async (user) => {
 
-    accountSize.textContent = plan
-      ? "$" + plan + " Account"
-      : "Account Loaded";
-
-  } else {
-    // not logged in
+  if (!user) {
     accountSize.textContent = "Not Logged In";
+    return;
   }
+
+  try {
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+      const data = snap.data();
+
+      accountSize.textContent = data.plan
+        ? "$" + data.plan + " Account"
+        : "No Plan Selected";
+
+    } else {
+      accountSize.textContent = "No Data Found";
+    }
+
+  } catch (err) {
+    accountSize.textContent = "Error Loading Data";
+  }
+
 });
+
 </script>
+ 
 
 </body>
 </html>
