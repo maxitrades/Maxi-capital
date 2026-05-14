@@ -2,117 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Signup</title>
+  <title>Challenges</title>
 </head>
 
-<body style="background:#0a0a0a; color:white; font-family:Arial; padding:40px;">
+<body style="background:#0a0a0a; color:white; font-family:Arial; margin:0;">
 
-<h1>Create Account</h1>
+<nav style="display:flex; justify-content:space-between; padding:20px 40px; border-bottom:1px solid #222;">
+  <h2>MAXI <span style="color:gold;">CAPITAL</span></h2>
 
-<h2 id="selected-plan">Selected Plan: Loading...</h2>
+  <div style="display:flex; gap:20px;">
+    <a href="index.html" style="color:white; text-decoration:none;">Home</a>
+    <a href="challenges.html" style="color:white; text-decoration:none;">Challenges</a>
+    <a href="dashboard.html" style="color:white; text-decoration:none;">Dashboard</a>
+    <a href="profile.html" style="color:white; text-decoration:none;">Profile</a>
+    <a href="login.html" style="color:white; text-decoration:none;">Login</a>
+  </div>
+</nav>
 
-<input
-  type="email"
-  id="email"
-  placeholder="Email"
-  style="padding:10px; margin:10px 0; width:250px;"
->
-<br>
+<section style="padding:40px;">
 
-<input
-  type="password"
-  id="password"
-  placeholder="Password"
-  style="padding:10px; margin:10px 0; width:250px;"
->
-<br>
+<h1>Choose Your Challenge</h1>
 
-<button
-  id="signup-btn"
-  style="padding:10px 18px; background:gold; border:none; cursor:pointer; margin-top:10px;"
->
-  Create Account
-</button>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px;">
 
-<p id="message"></p>
+  <div style="background:#111; padding:20px; border:1px solid #333;">
+    <h2>$1,000</h2>
+    <p>$3</p>
+    <button onclick="location.href='signup.html?plan=1000'"
+    style="background:gold; border:none; padding:10px;">Start</button>
+  </div>
 
-<script type="module">
+  <div style="background:#111; padding:20px; border:1px solid #333;">
+    <h2>$5,000</h2>
+    <p>$19</p>
+    <button onclick="location.href='signup.html?plan=5000'"
+    style="background:gold; border:none; padding:10px;">Start</button>
+  </div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  <div style="background:#111; padding:20px; border:1px solid #333;">
+    <h2>$10,000</h2>
+    <p>$39</p>
+    <button onclick="location.href='signup.html?plan=10000'"
+    style="background:gold; border:none; padding:10px;">Start</button>
+  </div>
 
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <div style="background:#111; padding:20px; border:1px solid #333;">
+    <h2>$25,000</h2>
+    <p>$79</p>
+    <button onclick="location.href='signup.html?plan=25000'"
+    style="background:gold; border:none; padding:10px;">Start</button>
+  </div>
 
-import { 
-  getFirestore, 
-  doc, 
-  setDoc 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJFfFdB44aCLsNKg6yqNMZ39Erwo",
-  authDomain: "maxi-capital.firebaseapp.com",
-  projectId: "maxi-capital",
-  storageBucket: "maxi-capital.firebasestorage.app",
-  messagingSenderId: "496545084482",
-  appId: "1:496545084482:web:689f942d3d02aec99169db",
-  measurementId: "G-7LSECL5MWV"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// show selected plan
-const params = new URLSearchParams(window.location.search);
-const plan = params.get("plan");
-
-const display = document.getElementById("selected-plan");
-
-display.textContent = plan 
-  ? "Selected Plan: $" + plan 
-  : "Selected Plan: None";
-
-const signupBtn = document.getElementById("signup-btn");
-
-signupBtn.addEventListener("click", async () => {
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    // save user + plan in Firestore
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: userCredential.user.email,
-      plan: plan || "none",
-      createdAt: new Date().toISOString()
-    });
-
-    document.getElementById("message").textContent =
-      "Account created successfully!";
-
-    // go to dashboard
-    window.location.href = "dashboard.html";
-
-  } catch (error) {
-
-    document.getElementById("message").textContent =
-      error.message;
-
-  }
-
-});
-
-</script>
+</section>
 
 </body>
 </html>
