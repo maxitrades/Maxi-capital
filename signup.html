@@ -37,7 +37,7 @@
 <p id="message"></p>
 
 <script type="module">
-
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -86,7 +86,7 @@ const params = new URLSearchParams(window.location.search);
 const plan = params.get("plan");
 
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+const db = getFirestore(app);
 // after user is created:
 setDoc(doc(db, "users", userCredential.user.uid), {
   email: userCredential.user.email,
