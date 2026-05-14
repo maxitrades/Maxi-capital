@@ -3,9 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign Up</title>
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const plan = params.get("plan");
+
+  const display = document.getElementById("selected-plan");
+
+  if (plan) {
+    display.textContent = "Selected Plan: $" + plan;
+  } else {
+    display.textContent = "Selected Plan: None";
+  }
+</script>
 </head>
 <body style="background:#0a0a0a; color:white; font-family:Arial;">
   <h1>Sign Up</h1>
+  <h2 id="selected-plan">Selected Plan: Loading...</h2>
 <button type="button" onclick="location.href='challenges.html'">
   Create Account
 </button>
