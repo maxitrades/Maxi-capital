@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+</head>
+
+<body style="background:#0a0a0a; color:white; font-family:Arial; padding:40px;">
+
+<h1>User Profile</h1>
+
+<p><strong>Email:</strong> <span id="email">Loading...</span></p>
+<p><strong>Status:</strong> Registered User</p>
+
+<h2 id="plan">Loading plan...</h2>
+
+<button onclick="location.href='dashboard.html'"
+style="padding:10px 18px; background:gold; border:none; cursor:pointer;">
+Go to Dashboard
+</button>
+
+<button onclick="location.href='logout.html'"
+style="padding:10px 18px; background:red; border:none; cursor:pointer; margin-left:10px;">
+Logout
+</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "maxi-capital.firebaseapp.com",
+  projectId: "maxi-capital",
+  storageBucket: "maxi-capital.firebasestorage.app",
+  messagingSenderId: "496545084482",
+  appId: "1:496545084482:web:689f942d3d02aec99169db"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  document.getElementById("email").textContent = user.email;
+
+  const snap = await getDoc(doc(db, "users", user.uid));
+
+  if (snap.exists()) {
+    const data = snap.data();
+    document.getElementById("plan").textContent =
+      "Selected Plan: $" + data.plan;
+  } else {
+    document.getElementById("plan").textContent =
+      "No Plan Found";
+  }
+
+});
+
+</script>
+
+</body>
+</html>
