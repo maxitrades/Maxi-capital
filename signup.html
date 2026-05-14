@@ -37,16 +37,22 @@
 <p id="message"></p>
 
 <script type="module">
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import {
-  getAuth,
-  createUserWithEmailAndPassword
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import { 
+  getFirestore, 
+  doc, 
+  setDoc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
+  apiKey: "AIzaSyACHSsLJFfFdB44aCLsNKg6yqNMZ39Erwo",
   authDomain: "maxi-capital.firebaseapp.com",
   projectId: "maxi-capital",
   storageBucket: "maxi-capital.firebasestorage.app",
@@ -57,52 +63,52 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
+// show selected plan
 const params = new URLSearchParams(window.location.search);
 const plan = params.get("plan");
 
 const display = document.getElementById("selected-plan");
 
-if (plan) {
-  display.textContent = "Selected Plan: $" + plan;
-} else {
-  display.textContent = "Selected Plan: None";
-}
+display.textContent = plan 
+  ? "Selected Plan: $" + plan 
+  : "Selected Plan: None";
 
 const signupBtn = document.getElementById("signup-btn");
 
-signupBtn.addEventListener("click", () => {
+signupBtn.addEventListener("click", async () => {
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
+  try {
 
-    .then((userCredential) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-      document.getElementById("message").textContent =
-        "Account created successfully!";
-const params = new URLSearchParams(window.location.search);
-const plan = params.get("plan");
-
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const db = getFirestore(app);
-// after user is created:
-setDoc(doc(db, "users", userCredential.user.uid), {
-  email: userCredential.user.email,
-  plan: plan || "none"
-});
-
-window.location.href = "dashboard.html";
-      
-    })
-
-    .catch((error) => {
-
-      document.getElementById("message").textContent =
-        error.message;
-
+    // save user + plan in Firestore
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      email: userCredential.user.email,
+      plan: plan || "none",
+      createdAt: new Date().toISOString()
     });
+
+    document.getElementById("message").textContent =
+      "Account created successfully!";
+
+    // go to dashboard
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+
+    document.getElementById("message").textContent =
+      error.message;
+
+  }
 
 });
 
