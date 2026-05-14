@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+
+<body style="background:#0a0a0a; color:white; font-family:Arial; padding:40px;">
+
+<h1>Login</h1>
+
+<input type="email" id="email" placeholder="Email"
+style="padding:10px; margin:10px 0; width:250px;"><br>
+
+<input type="password" id="password" placeholder="Password"
+style="padding:10px; margin:10px 0; width:250px;"><br>
+
+<button id="loginBtn"
+style="padding:10px 18px; background:gold; border:none; cursor:pointer;">
+Login
+</button>
+
+<p id="msg"></p>
+
+<p>
+  Don’t have an account?
+  <a href="signup.html" style="color:gold;">Sign up</a>
+</p>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "maxi-capital.firebaseapp.com",
+  projectId: "maxi-capital",
+  storageBucket: "maxi-capital.firebasestorage.app",
+  messagingSenderId: "496545084482",
+  appId: "1:496545084482:web:689f942d3d02aec99169db"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "profile.html";
+  } catch (err) {
+    document.getElementById("msg").textContent = err.message;
+  }
+
+});
+
+</script>
+
+</body>
+</html>
