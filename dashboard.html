@@ -112,143 +112,161 @@
   }
 
   updateUI();
-</script>
+<script>
+  const email = localStorage.getItem("userEmail");
+  document.getElementById("userEmail").textContent = email;
 
-  <!-- HEADER -->
-  <header class="border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+  // =========================
+  // ACCOUNT SETTINGS
+  // =========================
+  let accountSize = 10000;
+  let equity = 10000;
 
-    <h1 class="text-2xl font-bold text-yellow-400">
-      Maxi Capital Dashboard
-    </h1>
+  let maxLossPercent = 10;   // -10% account failure
+  let dailyLossLimit = 5;    // -5% daily failure
+  let dailyStartBalance = equity;
 
-    <button onclick="logout()"
-      class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
-      Logout
-    </button>
+  let trades = [];
+  let accountStatus = "ACTIVE";
 
-  </header>
+  // UI
+  const equityEl = document.getElementById("equity");
+  const progressText = document.getElementById("progressText");
+  const progressBar = document.getElementById("progressBar");
+  const phaseEl = document.getElementById("phase");
 
-  <!-- MAIN -->
-  <main class="max-w-7xl mx-auto p-6 space-y-6">
-<div class="glass p-8 rounded-3xl">
+  // =========================
+  // UPDATE UI
+  // =========================
+  function updateUI() {
 
-  <h2 class="text-2xl font-bold text-yellow-400 mb-4">
-    Trade Simulator
-  </h2>
+    let profitPercent = ((equity - accountSize) / accountSize) * 100;
 
-  <p class="text-gray-400 mb-4">
-    Test trading performance (demo system)
-  </p>
+    equityEl.textContent = "$" + equity.toFixed(2);
+    progressText.textContent = profitPercent.toFixed(2) + "%";
 
-  <div class="flex gap-4 mb-6">
+    let progress = (profitPercent / 8) * 100;
+    progressBar.style.width = Math.min(Math.max(progress, 0), 100) + "%";
 
-    <button onclick="openTrade('BUY')"
-      class="bg-green-500 px-6 py-3 rounded-xl font-bold hover:bg-green-400">
-      BUY
-    </button>
+    // Phase logic
+    if (profitPercent >= 8) {
+      phaseEl.textContent = "Phase Completed ✔";
+      phaseEl.classList.add("text-green-400");
+    } else {
+      phaseEl.textContent = "Phase 1";
+    }
 
-    <button onclick="openTrade('SELL')"
-      class="bg-red-500 px-6 py-3 rounded-xl font-bold hover:bg-red-400">
-      SELL
-    </button>
+    // ACCOUNT STATUS
+    if (accountStatus === "FAILED") {
+      phaseEl.textContent = "ACCOUNT FAILED ❌";
+      phaseEl.classList.remove("text-green-400");
+      phaseEl.classList.add("text-red-500");
+    }
+  }
 
-  </div>
+  // =========================
+  // CHECK RULES
+  // =========================
+  function checkRules() {
 
-  <h3 class="text-lg font-bold mb-2 text-white">
-    Trade History
-  </h3>
+    let totalLossPercent = ((accountSize - equity) / accountSize) * 100;
 
-  <div id="tradeList" class="text-sm text-gray-300 space-y-2">
+    let dailyLoss = ((dailyStartBalance - equity) / accountSize) * 100;
 
-  </div>
+    // MAX LOSS RULE
+    if (totalLossPercent >= maxLossPercent) {
+      failAccount("Max Loss Breached");
+    }
 
-</div>
-    <!-- USER INFO -->
-    <div class="glass p-8 rounded-3xl">
+    // DAILY LOSS RULE
+    if (dailyLoss >= dailyLossLimit) {
+      failAccount("Daily Loss Breached");
+    }
+  }
 
-      <h2 class="text-3xl font-bold mb-3">
-        Welcome Trader 👋
-      </h2>
+  // =========================
+  // FAIL ACCOUNT
+  // =========================
+  function failAccount(reason) {
+    accountStatus = "FAILED";
 
-      <p class="text-gray-400">
-        Account: <span id="userEmail" class="text-yellow-400"></span>
-      </p>
+    alert("ACCOUNT FAILED: " + reason);
 
-    </div>
+    trades = [];
 
-    <!-- ACCOUNT METRICS -->
-    <div class="grid md:grid-cols-3 gap-6">
+    updateUI();
+  }
 
-      <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Account Size</p>
-        <h3 class="text-3xl font-bold text-yellow-400">$10,000</h3>
-      </div>
+  // =========================
+  // TRADE ENGINE
+  // =========================
+  function openTrade(type) {
 
-      <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Current Equity</p>
-        <h3 class="text-3xl font-bold text-green-400" id="equity">$10,320</h3>
-      </div>
+    if (accountStatus === "FAILED") {
+      alert("Account is failed. No more trading allowed.");
+      return;
+    }
 
-      <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Phase</p>
-        <h3 class="text-3xl font-bold text-blue-400" id="phase">Phase 1</h3>
-      </div>
+    let risk = 50;
 
-    </div>
+    let result = Math.random();
 
-    <!-- PROGRESS -->
-    <div class="glass p-8 rounded-3xl">
+    let pnl = result > 0.5 ? risk : -risk;
 
-      <h3 class="text-xl font-bold mb-4 text-yellow-400">
-        Profit Progress
-      </h3>
+    equity += pnl;
 
-      <div class="w-full bg-zinc-800 rounded-full h-4">
+    trades.push({
+      type,
+      pnl,
+      balance: equity
+    });
 
-        <div id="progressBar"
-          class="bg-yellow-400 h-4 rounded-full"
-          style="width: 32%;">
+    checkRules();
+    updateUI();
+    renderTrades();
+  }
+
+  // =========================
+  // TRADE HISTORY
+  // =========================
+  function renderTrades() {
+    let container = document.getElementById("tradeList");
+
+    container.innerHTML = "";
+
+    trades.slice().reverse().forEach(t => {
+
+      let color = t.pnl >= 0 ? "text-green-400" : "text-red-400";
+
+      container.innerHTML += `
+        <div class="flex justify-between border-b border-zinc-800 py-2">
+          <span>${t.type}</span>
+          <span class="${color}">
+            ${t.pnl >= 0 ? "+" : ""}${t.pnl}
+          </span>
         </div>
+      `;
+    });
+  }
 
-      </div>
+  // =========================
+  // RESET DAILY (SIMULATION)
+  // =========================
+  setInterval(() => {
+    dailyStartBalance = equity;
+  }, 60000); // resets every 60 seconds for demo
 
-      <p class="text-gray-400 mt-3">
-        Target: 8% | Current: <span id="progressText">3.2%</span>
-      </p>
+  // =========================
+  // LOGOUT
+  // =========================
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("userEmail");
+    window.location.href = "login.html";
+  }
 
-    </div>
-
-    <!-- RISK -->
-    <div class="grid md:grid-cols-2 gap-6">
-
-      <div class="glass p-6 rounded-3xl border border-red-500/40">
-        <p class="text-gray-400">Daily Drawdown Limit</p>
-        <h3 class="text-2xl font-bold text-red-400">5%</h3>
-      </div>
-
-      <div class="glass p-6 rounded-3xl border border-red-500/40">
-        <p class="text-gray-400">Max Loss Limit</p>
-        <h3 class="text-2xl font-bold text-red-400">10%</h3>
-      </div>
-
-    </div>
-
-    <!-- WARNING -->
-    <div class="glass p-6 rounded-3xl border border-yellow-400/30">
-
-      <h3 class="text-xl font-bold text-yellow-400 mb-2">
-        Trading Rules Reminder
-      </h3>
-
-      <p class="text-gray-400">
-        Do not exceed drawdown limits. Consistency and risk management are required to pass the challenge.
-      </p>
-
-    </div>
-
-  </main>
-
-  <script>
+  updateUI();
+</script>
     // USER INFO
     const email = localStorage.getItem("userEmail");
     document.getElementById("userEmail").textContent = email;
