@@ -1,61 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Challenges</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup - Maxi Capital</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      background:#050505;
+      color:white;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .gold{
+      color:#d4af37;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-gold{
+      background:#d4af37;
+      color:black;
+      transition:0.3s;
+    }
+
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      opacity:0.9;
+    }
+
+    input{
+      background:#111;
+      border:1px solid rgba(255,255,255,0.08);
+      outline:none;
+    }
+
+    input:focus{
+      border-color:#d4af37;
+    }
+  </style>
 </head>
 
-<body style="background:#0a0a0a; color:white; font-family:Arial; margin:0;">
+<body>
 
-<nav style="display:flex; justify-content:space-between; padding:20px 40px; border-bottom:1px solid #222;">
-  <h2>MAXI <span style="color:gold;">CAPITAL</span></h2>
+<!-- NAVBAR -->
+<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
 
-  <div style="display:flex; gap:20px;">
-    <a href="index.html" style="color:white; text-decoration:none;">Home</a>
-    <a href="challenges.html" style="color:white; text-decoration:none;">Challenges</a>
-    <a href="dashboard.html" style="color:white; text-decoration:none;">Dashboard</a>
-    <a href="profile.html" style="color:white; text-decoration:none;">Profile</a>
-    <a href="login.html" style="color:white; text-decoration:none;">Login</a>
+  <h1 class="text-2xl font-bold tracking-wider">
+    MAXI <span class="gold">CAPITAL</span>
+  </h1>
+
+  <div class="hidden md:flex gap-8 text-sm">
+
+    <a href="index.html" class="hover:text-yellow-400">
+      Home
+    </a>
+
+    <a href="challenges.html" class="hover:text-yellow-400">
+      Challenges
+    </a>
+
+    <a href="login.html" class="hover:text-yellow-400">
+      Login
+    </a>
+
   </div>
+
 </nav>
 
-<section style="padding:40px;">
+<!-- SIGNUP -->
+<section class="min-h-screen flex items-center justify-center px-6 py-20">
 
-<h1>Choose Your Challenge</h1>
+  <div class="glass w-full max-w-xl p-10 rounded-[35px]">
 
-<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px;">
+    <p class="gold uppercase tracking-[4px] text-sm">
+      Funded Trader Registration
+    </p>
 
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$1,000</h2>
-    <p>$3</p>
-    <button onclick="location.href='signup.html?plan=1000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
+    <h1 class="text-5xl font-bold mt-6 leading-tight">
+      Create Your Account
+    </h1>
+
+    <p class="text-gray-400 mt-6 text-lg">
+      Begin your journey with Maxi Capital and access funded trading opportunities.
+    </p>
+
+    <!-- PLAN -->
+    <div class="glass mt-10 p-6 rounded-2xl">
+
+      <p class="text-gray-400 text-sm">
+        Selected Challenge
+      </p>
+
+      <h2 id="selected-plan" class="text-4xl font-bold mt-3 gold">
+        Loading...
+      </h2>
+
+    </div>
+
+    <!-- FORM -->
+    <div class="mt-10 space-y-6">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        class="w-full px-5 py-4 rounded-2xl"
+      />
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Create password"
+        class="w-full px-5 py-4 rounded-2xl"
+      />
+
+      <button
+        id="signup-btn"
+        class="btn-gold w-full py-5 rounded-2xl font-bold text-lg"
+      >
+        Create Account
+      </button>
+
+    </div>
+
+    <p id="message" class="mt-6 text-center text-red-400"></p>
+
+    <p class="text-gray-400 mt-8 text-center">
+      Already have an account?
+
+      <a href="login.html" class="gold hover:text-yellow-400">
+        Login
+      </a>
+    </p>
+
   </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$5,000</h2>
-    <p>$19</p>
-    <button onclick="location.href='signup.html?plan=5000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$10,000</h2>
-    <p>$39</p>
-    <button onclick="location.href='signup.html?plan=10000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$25,000</h2>
-    <p>$79</p>
-    <button onclick="location.href='signup.html?plan=25000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-</div>
 
 </section>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
+
+  authDomain: "maxi-capital.firebaseapp.com",
+
+  projectId: "maxi-capital",
+
+  storageBucket: "maxi-capital.firebasestorage.app",
+
+  messagingSenderId: "496545084482",
+
+  appId: "1:496545084482:web:689f942d3d02aec99169db"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+const params = new URLSearchParams(window.location.search);
+
+const plan = params.get("plan");
+
+document.getElementById("selected-plan").textContent =
+  plan ? "$" + plan + " Challenge" : "No Challenge";
+
+document.getElementById("signup-btn").addEventListener("click", async () => {
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  try {
+
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    await setDoc(
+      doc(db, "users", userCredential.user.uid),
+      {
+        email: userCredential.user.email,
+        plan: plan
+      }
+    );
+
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+
+    document.getElementById("message").textContent =
+      error.message;
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
