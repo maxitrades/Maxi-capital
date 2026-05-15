@@ -1,59 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Challenges</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenges - Maxi Capital</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      background:#050505;
+      color:white;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .gold{
+      color:#d4af37;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-gold{
+      background:#d4af37;
+      color:black;
+      transition:0.3s;
+    }
+
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      opacity:0.9;
+    }
+  </style>
 </head>
 
-<body style="background:#0a0a0a; color:white; font-family:Arial; margin:0;">
+<body>
 
-<nav style="display:flex; justify-content:space-between; padding:20px 40px; border-bottom:1px solid #222;">
-  <h2>MAXI <span style="color:gold;">CAPITAL</span></h2>
+<!-- NAVBAR -->
+<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
 
-  <div style="display:flex; gap:20px;">
-    <a href="index.html" style="color:white; text-decoration:none;">Home</a>
-    <a href="challenges.html" style="color:white; text-decoration:none;">Challenges</a>
-    <a href="dashboard.html" style="color:white; text-decoration:none;">Dashboard</a>
-    <a href="profile.html" style="color:white; text-decoration:none;">Profile</a>
-    <a href="login.html" style="color:white; text-decoration:none;">Login</a>
+  <h1 class="text-2xl font-bold tracking-wider">
+    MAXI <span class="gold">CAPITAL</span>
+  </h1>
+
+  <div class="hidden md:flex gap-8 text-sm">
+
+    <a href="index.html" class="hover:text-yellow-400">
+      Home
+    </a>
+
+    <a href="challenges.html" class="hover:text-yellow-400">
+      Challenges
+    </a>
+
+    <a href="login.html" class="hover:text-yellow-400">
+      Login
+    </a>
+
   </div>
+
 </nav>
 
-<section style="padding:40px;">
+<!-- HEADER -->
+<section class="px-8 lg:px-20 py-20 text-center">
 
-<h1>Choose Your Challenge</h1>
+  <p class="gold uppercase tracking-[4px] text-sm">
+    Funding Programs
+  </p>
 
-<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px;">
+  <h1 class="text-5xl lg:text-6xl font-bold mt-6">
+    Choose Your Challenge
+  </h1>
 
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$1,000</h2>
-    <p>$3</p>
-    <button onclick="location.href='signup.html?plan=1000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
+  <p class="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
+    Select the funding challenge that matches your trading goals and start your journey with Maxi Capital.
+  </p>
+
+</section>
+
+<!-- CHALLENGE CARDS -->
+<section class="px-8 lg:px-20 pb-24">
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+    <!-- 1K -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-4xl font-bold">
+        $1K
+      </h2>
+
+      <p class="text-gray-400 mt-4">
+        Beginner funding challenge for disciplined traders.
+      </p>
+
+      <h3 class="gold text-5xl font-bold mt-10">
+        $3
+      </h3>
+
+      <ul class="mt-8 space-y-4 text-gray-300">
+        <li>✔ 8% Profit Target</li>
+        <li>✔ 5% Daily Drawdown</li>
+        <li>✔ 90% Profit Split</li>
+      </ul>
+
+      <a href="signup.html?plan=1000">
+        <button class="btn-gold w-full mt-10 py-4 rounded-2xl font-bold">
+          Start Challenge
+        </button>
+      </a>
+
+    </div>
+
+    <!-- 5K -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-4xl font-bold">
+        $5K
+      </h2>
+
+      <p class="text-gray-400 mt-4">
+        Perfect for growing consistent traders.
+      </p>
+
+      <h3 class="gold text-5xl font-bold mt-10">
+        $19
+      </h3>
+
+      <ul class="mt-8 space-y-4 text-gray-300">
+        <li>✔ 8% Profit Target</li>
+        <li>✔ 5% Daily Drawdown</li>
+        <li>✔ 90% Profit Split</li>
+      </ul>
+
+      <a href="signup.html?plan=5000">
+        <button class="btn-gold w-full mt-10 py-4 rounded-2xl font-bold">
+          Start Challenge
+        </button>
+      </a>
+
+    </div>
+
+    <!-- 10K -->
+    <div class="glass p-8 rounded-3xl border border-yellow-500/40">
+
+      <h2 class="text-4xl font-bold">
+        $10K
+      </h2>
+
+      <p class="text-gray-400 mt-4">
+        Built for serious funded traders.
+      </p>
+
+      <h3 class="gold text-5xl font-bold mt-10">
+        $39
+      </h3>
+
+      <ul class="mt-8 space-y-4 text-gray-300">
+        <li>✔ 8% Profit Target</li>
+        <li>✔ 5% Daily Drawdown</li>
+        <li>✔ 90% Profit Split</li>
+      </ul>
+
+      <a href="signup.html?plan=10000">
+        <button class="btn-gold w-full mt-10 py-4 rounded-2xl font-bold">
+          Start Challenge
+        </button>
+      </a>
+
+    </div>
+
+    <!-- 25K -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-4xl font-bold">
+        $25K
+      </h2>
+
+      <p class="text-gray-400 mt-4">
+        Professional capital allocation challenge.
+      </p>
+
+      <h3 class="gold text-5xl font-bold mt-10">
+        $79
+      </h3>
+
+      <ul class="mt-8 space-y-4 text-gray-300">
+        <li>✔ 8% Profit Target</li>
+        <li>✔ 5% Daily Drawdown</li>
+        <li>✔ 90% Profit Split</li>
+      </ul>
+
+      <a href="signup.html?plan=25000">
+        <button class="btn-gold w-full mt-10 py-4 rounded-2xl font-bold">
+          Start Challenge
+        </button>
+      </a>
+
+    </div>
+
   </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$5,000</h2>
-    <p>$19</p>
-    <button onclick="location.href='signup.html?plan=5000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$10,000</h2>
-    <p>$39</p>
-    <button onclick="location.href='signup.html?plan=10000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-  <div style="background:#111; padding:20px; border:1px solid #333;">
-    <h2>$25,000</h2>
-    <p>$79</p>
-    <button onclick="location.href='signup.html?plan=25000'"
-    style="background:gold; border:none; padding:10px;">Start</button>
-  </div>
-
-</div>
 
 </section>
 
