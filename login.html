@@ -2,79 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Login | Maxi Capital</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
+<body class="bg-black text-white flex items-center justify-center min-h-screen">
 
   <div class="w-full max-w-md glass p-8 rounded-3xl">
 
-    <h1 class="text-4xl font-bold mb-2 text-center">Welcome Back</h1>
+    <h1 class="text-3xl font-bold text-yellow-400 mb-6 text-center">
+      Login
+    </h1>
 
-    <p class="text-gray-400 text-center mb-8">
-      Login to your account
-    </p>
+    <input id="email"
+      type="email"
+      placeholder="Email"
+      class="w-full p-3 mb-4 rounded-xl bg-zinc-900 border border-zinc-700"
+    />
 
-    <form id="loginForm" class="space-y-5">
+    <input id="password"
+      type="password"
+      placeholder="Password"
+      class="w-full p-3 mb-6 rounded-xl bg-zinc-900 border border-zinc-700"
+    />
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Email"
-        class="w-full p-4 rounded-xl bg-zinc-900 border border-zinc-700 focus:outline-none focus:border-yellow-400"
-        required
-      />
+    <button onclick="login()"
+      class="w-full bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-300 transition">
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        class="w-full p-4 rounded-xl bg-zinc-900 border border-zinc-700 focus:outline-none focus:border-yellow-400"
-        required
-      />
+      Login
+    </button>
 
-      <button
-        type="submit"
-        class="w-full bg-yellow-400 text-black font-bold py-4 rounded-xl hover:bg-yellow-300 transition"
-      >
-        Login
-      </button>
-
-    </form>
-
-    <p class="text-center text-gray-400 mt-6">
-      Don’t have an account?
-
-      <a href="signup.html" class="text-yellow-400 hover:text-yellow-300">
-        Create one
-      </a>
-    </p>
+    <p id="error" class="text-red-500 mt-4 text-center"></p>
 
   </div>
 
   <script>
-    document.getElementById("loginForm")
-      .addEventListener("submit", function(event){
-
-      event.preventDefault();
+    function login() {
 
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+      const error = document.getElementById("error");
 
-      if(password.length < 6){
-        alert("Password must be at least 6 characters.");
+      // basic validation
+      if (!email || !password) {
+        error.textContent = "Please fill in all fields";
         return;
       }
+
+      // SIMPLE DEMO AUTH (no backend yet)
+      // you can later replace this with Firebase
 
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("userEmail", email);
 
+      // redirect to dashboard
       window.location.href = "dashboard.html";
-    });
+    }
+
+    // auto redirect if already logged in
+    if (localStorage.getItem("loggedIn") === "true") {
+      window.location.href = "dashboard.html";
+    }
   </script>
 
 </body>
