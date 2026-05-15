@@ -3,32 +3,42 @@
 <head>
   <title>Login</title>
   <script type="module">
-    import { auth } from "./firebase.js";
-    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyACHSsLJF...",
+      authDomain: "maxi-capital.firebaseapp.com",
+      projectId: "maxi-capital",
+      storageBucket: "maxi-capital.appspot.com",
+      messagingSenderId: "496545084482",
+      appId: "1:496545084482:web:689f942d3d02aec99169db"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // SAFE persistence (no await chaos)
+    setPersistence(auth, browserLocalPersistence);
 
     window.login = async () => {
-
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
       try {
-
         await signInWithEmailAndPassword(auth, email, password);
-
         window.location.href = "dashboard.html";
-
       } catch (err) {
         alert(err.message);
       }
-
     };
   </script>
 </head>
 
 <body>
-  <input id="email" placeholder="email" />
-  <input id="password" type="password" placeholder="password" />
-
+  <input id="email" placeholder="email">
+  <input id="password" type="password" placeholder="password">
   <button onclick="login()">Login</button>
 </body>
 </html>
