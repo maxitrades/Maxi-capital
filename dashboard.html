@@ -1,66 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Signup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Maxi Capital</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      background:#050505;
+      color:white;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .gold{
+      color:#d4af37;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-gold{
+      background:#d4af37;
+      color:black;
+      transition:0.3s;
+    }
+
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      opacity:0.9;
+    }
+  </style>
 </head>
 
-<body style="background:#0a0a0a; color:white; font-family:Arial; padding:40px;">
+<body>
 
-<h1>Create Account</h1>
+<!-- NAVBAR -->
+<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
 
-<h2 id="selected-plan">Loading...</h2>
+  <h1 class="text-2xl font-bold tracking-wider">
+    MAXI <span class="gold">CAPITAL</span>
+  </h1>
 
-<input id="email" placeholder="Email" style="padding:10px; width:250px;"><br><br>
-<input id="password" type="password" placeholder="Password" style="padding:10px; width:250px;"><br><br>
+  <div class="hidden md:flex gap-8 text-sm">
 
-<button id="btn" style="padding:10px 18px; background:gold; border:none;">Create</button>
+    <a href="index.html" class="hover:text-yellow-400">
+      Home
+    </a>
 
-<p id="msg"></p>
+    <a href="challenges.html" class="hover:text-yellow-400">
+      Challenges
+    </a>
 
+    <a href="login.html" class="hover:text-yellow-400">
+      Login
+    </a>
+
+  </div>
+
+</nav>
+
+<!-- DASHBOARD -->
+<section class="px-8 lg:px-20 py-20">
+
+  <p class="gold uppercase tracking-[4px] text-sm">
+    Trader Dashboard
+  </p>
+
+  <h1 class="text-5xl font-bold mt-5">
+    Welcome Back
+  </h1>
+
+  <div class="grid md:grid-cols-3 gap-8 mt-16">
+
+    <!-- ACCOUNT -->
+    <div class="glass p-8 rounded-3xl">
+
+      <p class="text-gray-400 text-sm">
+        Funded Account
+      </p>
+
+      <h2 id="plan" class="text-4xl font-bold mt-4 gold">
+        Loading...
+      </h2>
+
+    </div>
+
+    <!-- STATUS -->
+    <div class="glass p-8 rounded-3xl">
+
+      <p class="text-gray-400 text-sm">
+        Status
+      </p>
+
+      <h2 class="text-4xl font-bold mt-4 text-green-400">
+        Active
+      </h2>
+
+    </div>
+
+    <!-- PROFIT SPLIT -->
+    <div class="glass p-8 rounded-3xl">
+
+      <p class="text-gray-400 text-sm">
+        Profit Split
+      </p>
+
+      <h2 class="text-4xl font-bold mt-4 gold">
+        90%
+      </h2>
+
+    </div>
+
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="flex gap-5 mt-16 flex-wrap">
+
+    <a href="challenges.html">
+      <button class="btn-gold px-8 py-4 rounded-2xl font-bold">
+        Buy Another Challenge
+      </button>
+    </a>
+
+    <button
+      id="logout-btn"
+      class="glass px-8 py-4 rounded-2xl font-bold"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</section>
+
+<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
+
+  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
+
   authDomain: "maxi-capital.firebaseapp.com",
+
   projectId: "maxi-capital",
+
   storageBucket: "maxi-capital.firebasestorage.app",
+
   messagingSenderId: "496545084482",
+
   appId: "1:496545084482:web:689f942d3d02aec99169db"
+
 };
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
-const plan = new URLSearchParams(location.search).get("plan");
-document.getElementById("selected-plan").innerText =
-  plan ? "Selected: $" + plan : "No plan";
+onAuthStateChanged(auth, async (user) => {
 
-document.getElementById("btn").onclick = async () => {
+  if (!user) {
 
-  const email = email.value;
-  const password = password.value;
+    window.location.href = "login.html";
 
-  try {
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+    return;
 
-    await setDoc(doc(db, "users", userCred.user.uid), {
-      email: userCred.user.email,
-      plan: plan
-    });
-
-    location.href = "dashboard.html";
-
-  } catch (e) {
-    document.getElementById("msg").innerText = e.message;
   }
 
-};
+  const docRef = doc(db, "users", user.uid);
+
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+
+    document.getElementById("plan").textContent =
+      "$" + docSnap.data().plan;
+
+  }
+
+});
+
+document.getElementById("logout-btn")
+.addEventListener("click", async () => {
+
+  await signOut(auth);
+
+  window.location.href = "login.html";
+
+});
 
 </script>
 
