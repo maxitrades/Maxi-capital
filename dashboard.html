@@ -1,63 +1,153 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Dashboard | Maxi Capital</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-black text-white min-h-screen">
+
+  <!-- AUTH CHECK -->
+  <script>
+    const loggedIn = localStorage.getItem("loggedIn");
+
+    if (loggedIn !== "true") {
+      window.location.href = "login.html";
+    }
   </script>
 
+  <!-- HEADER -->
   <header class="border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-yellow-400">Maxi Capital</h1>
 
-    <button
-      onclick="logout()"
-      class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition"
-    >
+    <h1 class="text-2xl font-bold text-yellow-400">
+      Maxi Capital Dashboard
+    </h1>
+
+    <button onclick="logout()"
+      class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
       Logout
     </button>
+
   </header>
 
-  <main class="max-w-7xl mx-auto p-6">
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto p-6 space-y-6">
 
-    <div class="glass p-8 rounded-3xl mb-8">
-      <h2 class="text-3xl font-bold mb-4">
-        Welcome Back 👋
+    <!-- USER INFO -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-3xl font-bold mb-3">
+        Welcome Trader 👋
       </h2>
 
       <p class="text-gray-400">
-        Logged in as:
-        <span id="userEmail" class="text-yellow-400"></span>
+        Account: <span id="userEmail" class="text-yellow-400"></span>
       </p>
+
     </div>
 
+    <!-- ACCOUNT METRICS -->
     <div class="grid md:grid-cols-3 gap-6">
 
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400 mb-2">Account Balance</p>
-        <h3 class="text-4xl font-bold text-yellow-400">$0.00</h3>
+        <p class="text-gray-400">Account Size</p>
+        <h3 class="text-3xl font-bold text-yellow-400">$10,000</h3>
       </div>
 
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400 mb-2">Selected Plan</p>
-        <h3 id="planDisplay" class="text-4xl font-bold text-yellow-400">None</h3>
+        <p class="text-gray-400">Current Equity</p>
+        <h3 class="text-3xl font-bold text-green-400" id="equity">$10,320</h3>
       </div>
 
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400 mb-2">Status</p>
-        <h3 class="text-4xl font-bold text-green-400">Active</h3>
+        <p class="text-gray-400">Phase</p>
+        <h3 class="text-3xl font-bold text-blue-400" id="phase">Phase 1</h3>
       </div>
+
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h3 class="text-xl font-bold mb-4 text-yellow-400">
+        Profit Progress
+      </h3>
+
+      <div class="w-full bg-zinc-800 rounded-full h-4">
+
+        <div id="progressBar"
+          class="bg-yellow-400 h-4 rounded-full"
+          style="width: 32%;">
+        </div>
+
+      </div>
+
+      <p class="text-gray-400 mt-3">
+        Target: 8% | Current: <span id="progressText">3.2%</span>
+      </p>
+
+    </div>
+
+    <!-- RISK -->
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <div class="glass p-6 rounded-3xl border border-red-500/40">
+        <p class="text-gray-400">Daily Drawdown Limit</p>
+        <h3 class="text-2xl font-bold text-red-400">5%</h3>
+      </div>
+
+      <div class="glass p-6 rounded-3xl border border-red-500/40">
+        <p class="text-gray-400">Max Loss Limit</p>
+        <h3 class="text-2xl font-bold text-red-400">10%</h3>
+      </div>
+
+    </div>
+
+    <!-- WARNING -->
+    <div class="glass p-6 rounded-3xl border border-yellow-400/30">
+
+      <h3 class="text-xl font-bold text-yellow-400 mb-2">
+        Trading Rules Reminder
+      </h3>
+
+      <p class="text-gray-400">
+        Do not exceed drawdown limits. Consistency and risk management are required to pass the challenge.
+      </p>
 
     </div>
 
   </main>
 
   <script>
+    // USER INFO
     const email = localStorage.getItem("userEmail");
     document.getElementById("userEmail").textContent = email;
 
-    const params = new URLSearchParams(window.location.search);
-    const plan = params.get("plan");
+    // SIMULATED DATA (for prototype)
+    let equity = 10320;
+    let account = 10000;
 
-    if(plan){
-      document.getElementById("planDisplay").textContent = "$" + plan;
+    let profitPercent = ((equity - account) / account) * 100;
+
+    document.getElementById("equity").textContent = "$" + equity;
+    document.getElementById("progressText").textContent = profitPercent.toFixed(2) + "%";
+
+    document.getElementById("progressBar").style.width =
+      Math.min(profitPercent / 8 * 100, 100) + "%";
+
+    // PHASE LOGIC
+    if (profitPercent >= 8) {
+      document.getElementById("phase").textContent = "Completed ✔";
+      document.getElementById("phase").classList.add("text-green-400");
     }
 
-    function logout(){
+    // LOGOUT
+    function logout() {
       localStorage.removeItem("loggedIn");
       localStorage.removeItem("userEmail");
 
