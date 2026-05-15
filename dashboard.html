@@ -1,32 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence }
+    import { getAuth, onAuthStateChanged } 
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import { getFirestore, doc, getDoc }
+    import { getFirestore, doc, getDoc } 
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACHSsLJF...",
       authDomain: "maxi-capital.firebaseapp.com",
-      projectId: "maxi-capital",
-      storageBucket: "maxi-capital.appspot.com",
-      messagingSenderId: "496545084482",
-      appId: "1:496545084482:web:689f942d3d02aec99169db"
+      projectId: "maxi-capital"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
-    setPersistence(auth, browserLocalPersistence);
 
     onAuthStateChanged(auth, async (user) => {
 
@@ -41,9 +33,9 @@
 
       const data = snap.data();
 
-      document.getElementById("email").textContent = data.email;
-      document.getElementById("plan").textContent = "$" + (data.plan || 0);
-      document.getElementById("challenge").textContent = data.challenge || "Not Selected";
+      document.getElementById("email").innerText = data.email;
+      document.getElementById("challenge").innerText = data.challenge || "Not Selected";
+      document.getElementById("plan").innerText = "$" + (data.plan || 0);
 
       if (!data.challenge) {
         document.getElementById("warning").style.display = "block";
@@ -53,20 +45,17 @@
   </script>
 </head>
 
-<body style="background:#050505;color:white;font-family:Arial;padding:40px;">
-
+<body>
   <h1>Dashboard</h1>
 
   <p>Email: <span id="email"></span></p>
-
-  <p>Account Size: <span id="plan"></span></p>
-
+  <p>Plan: <span id="plan"></span></p>
   <p>Challenge: <span id="challenge"></span></p>
 
-  <div id="warning" style="display:none;color:red;margin-top:20px;">
-    No challenge selected. Go choose one.
-    <br><br>
-    <a href="challenges.html" style="color:#d4af37;">Go to Challenges</a>
+  <div id="warning" style="display:none;color:red;">
+    No challenge selected
+    <br>
+    <a href="challenges.html">Go choose one</a>
   </div>
 
 </body>
