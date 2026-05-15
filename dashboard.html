@@ -14,9 +14,7 @@
       font-family:Arial, Helvetica, sans-serif;
     }
 
-    .gold{
-      color:#d4af37;
-    }
+    .gold{ color:#d4af37; }
 
     .glass{
       background:rgba(255,255,255,0.05);
@@ -27,112 +25,44 @@
     .btn-gold{
       background:#d4af37;
       color:black;
-      transition:0.3s;
-    }
-
-    .btn-gold:hover{
-      transform:translateY(-2px);
-      opacity:0.9;
     }
   </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
+<!-- NAV -->
+<nav class="flex justify-between px-8 py-6 border-b border-white/10">
+  <h1 class="text-xl font-bold">MAXI <span class="gold">CAPITAL</span></h1>
 
-  <h1 class="text-2xl font-bold tracking-wider">
-    MAXI <span class="gold">CAPITAL</span>
-  </h1>
-
-  <div class="hidden md:flex gap-8 text-sm">
-
-    <a href="index.html" class="hover:text-yellow-400">
-      Home
-    </a>
-
-    <a href="challenges.html" class="hover:text-yellow-400">
-      Challenges
-    </a>
-
-    <a href="login.html" class="hover:text-yellow-400">
-      Login
-    </a>
-
+  <div class="flex gap-6 text-sm">
+    <a href="index.html">Home</a>
+    <a href="challenges.html">Challenges</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Logout</a>
   </div>
-
 </nav>
 
-<!-- DASHBOARD -->
-<section class="px-8 lg:px-20 py-20">
+<section class="px-8 py-20">
 
-  <p class="gold uppercase tracking-[4px] text-sm">
-    Trader Dashboard
-  </p>
+  <h1 class="text-4xl font-bold">Dashboard</h1>
 
-  <h1 class="text-5xl font-bold mt-5">
-    Welcome Back
-  </h1>
+  <div class="grid md:grid-cols-3 gap-6 mt-10">
 
-  <div class="grid md:grid-cols-3 gap-8 mt-16">
-
-    <!-- ACCOUNT -->
-    <div class="glass p-8 rounded-3xl">
-
-      <p class="text-gray-400 text-sm">
-        Funded Account
-      </p>
-
-      <h2 id="plan" class="text-4xl font-bold mt-4 gold">
-        Loading...
-      </h2>
-
+    <div class="glass p-6 rounded-2xl">
+      <p class="text-gray-400">Funded Account</p>
+      <h2 id="plan" class="text-3xl gold mt-2">$0</h2>
     </div>
 
-    <!-- STATUS -->
-    <div class="glass p-8 rounded-3xl">
-
-      <p class="text-gray-400 text-sm">
-        Status
-      </p>
-
-      <h2 class="text-4xl font-bold mt-4 text-green-400">
-        Active
-      </h2>
-
+    <div class="glass p-6 rounded-2xl">
+      <p class="text-gray-400">Status</p>
+      <h2 class="text-green-400 text-2xl mt-2">Active</h2>
     </div>
 
-    <!-- PROFIT SPLIT -->
-    <div class="glass p-8 rounded-3xl">
-
-      <p class="text-gray-400 text-sm">
-        Profit Split
-      </p>
-
-      <h2 class="text-4xl font-bold mt-4 gold">
-        90%
-      </h2>
-
+    <div class="glass p-6 rounded-2xl">
+      <p class="text-gray-400">Profit Split</p>
+      <h2 class="text-2xl mt-2 gold">90%</h2>
     </div>
-
-  </div>
-
-  <!-- BUTTONS -->
-  <div class="flex gap-5 mt-16 flex-wrap">
-
-    <a href="challenges.html">
-      <button class="btn-gold px-8 py-4 rounded-2xl font-bold">
-        Buy Another Challenge
-      </button>
-    </a>
-
-    <button
-      id="logout-btn"
-      class="glass px-8 py-4 rounded-2xl font-bold"
-    >
-      Logout
-    </button>
 
   </div>
 
@@ -142,70 +72,36 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
-
   authDomain: "maxi-capital.firebaseapp.com",
-
   projectId: "maxi-capital",
-
   storageBucket: "maxi-capital.firebasestorage.app",
-
   messagingSenderId: "496545084482",
-
   appId: "1:496545084482:web:689f942d3d02aec99169db"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
+// AUTH PROTECTION
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
-
     window.location.href = "login.html";
-
     return;
-
   }
 
-  const docRef = doc(db, "users", user.uid);
+  const snap = await getDoc(doc(db, "users", user.uid));
 
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-
+  if (snap.exists()) {
     document.getElementById("plan").textContent =
-      "$" + docSnap.data().plan;
-
+      "$" + snap.data().plan;
   }
-
-});
-
-document.getElementById("logout-btn")
-.addEventListener("click", async () => {
-
-  await signOut(auth);
-
-  window.location.href = "login.html";
 
 });
 
