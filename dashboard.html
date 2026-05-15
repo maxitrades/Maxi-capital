@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - Maxi Capital</title>
+  <title>Dashboard</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -11,15 +11,15 @@
     body{
       background:#050505;
       color:white;
-      font-family:Arial, Helvetica, sans-serif;
+      font-family:Arial;
     }
 
     .gold{ color:#d4af37; }
 
     .glass{
       background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(10px);
       border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(10px);
     }
 
     .btn-gold{
@@ -33,9 +33,9 @@
 
 <!-- NAV -->
 <nav class="flex justify-between px-8 py-6 border-b border-white/10">
-  <h1 class="text-xl font-bold">MAXI <span class="gold">CAPITAL</span></h1>
+  <h1>MAXI <span class="gold">CAPITAL</span></h1>
 
-  <div class="flex gap-6 text-sm">
+  <div class="flex gap-5 text-sm">
     <a href="index.html">Home</a>
     <a href="challenges.html">Challenges</a>
     <a href="profile.html">Profile</a>
@@ -50,30 +50,34 @@
   <div class="grid md:grid-cols-3 gap-6 mt-10">
 
     <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Funded Account</p>
-      <h2 id="plan" class="text-3xl gold mt-2">$0</h2>
+      <p class="text-gray-400">Account</p>
+      <h2 id="plan" class="text-3xl gold">$0</h2>
     </div>
 
     <div class="glass p-6 rounded-2xl">
       <p class="text-gray-400">Status</p>
-      <h2 class="text-green-400 text-2xl mt-2">Active</h2>
+      <h2 class="text-green-400 text-2xl">Active</h2>
     </div>
 
     <div class="glass p-6 rounded-2xl">
       <p class="text-gray-400">Profit Split</p>
-      <h2 class="text-2xl mt-2 gold">90%</h2>
+      <h2 class="text-2xl gold">90%</h2>
     </div>
 
   </div>
 
+  <!-- PROGRESS TEST BUTTON -->
+  <button id="addProgress" class="btn-gold px-6 py-3 mt-10 rounded-xl">
+    Increase Progress (+10%)
+  </button>
+
 </section>
 
-<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
@@ -88,7 +92,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// AUTH PROTECTION
+let currentUser = null;
+
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
@@ -96,11 +101,35 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
+  currentUser = user;
+
   const snap = await getDoc(doc(db, "users", user.uid));
 
   if (snap.exists()) {
-    document.getElementById("plan").textContent =
-      "$" + snap.data().plan;
+    const data = snap.data();
+    document.getElementById("plan").textContent = "$" + data.plan;
+  }
+
+});
+
+// PROGRESS UPDATE
+document.getElementById("addProgress").addEventListener("click", async () => {
+
+  if (!currentUser) return;
+
+  const ref = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(ref);
+
+  if (snap.exists()) {
+
+    let progress = snap.data().progress || 0;
+
+    progress += 10;
+    if (progress > 100) progress = 100;
+
+    await updateDoc(ref, { progress });
+
+    location.reload();
   }
 
 });
