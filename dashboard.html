@@ -1,56 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Dashboard</title>
-
-  <script type="module">
-  import { auth, db } from "./firebase.js";
-
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-onAuthStateChanged(auth, async (user) => {
-
-  if (!user) {
-
-    window.location.href = "login.html";
-    return;
-
-  }
-
-  const snap = await getDoc(doc(db, "users", user.uid));
-
-  if (!snap.exists()) return;
-
-  const data = snap.data();
-
-  document.getElementById("email").innerText = data.email;
-
-  document.getElementById("challenge").innerText =
-    data.challenge || "Not Selected";
-
-});
   </script>
-</head>
 
-<body>
-  <h1>Dashboard</h1>
+  <header class="border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-yellow-400">Maxi Capital</h1>
 
-  <p>Email: <span id="email"></span></p>
-  <p>Plan: <span id="plan"></span></p>
-  <p>Challenge: <span id="challenge"></span></p>
+    <button
+      onclick="logout()"
+      class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition"
+    >
+      Logout
+    </button>
+  </header>
 
-  <div id="warning" style="display:none;color:red;">
-    No challenge selected
-    <br>
-    <a href="challenges.html">Go choose one</a>
-  </div>
+  <main class="max-w-7xl mx-auto p-6">
+
+    <div class="glass p-8 rounded-3xl mb-8">
+      <h2 class="text-3xl font-bold mb-4">
+        Welcome Back 👋
+      </h2>
+
+      <p class="text-gray-400">
+        Logged in as:
+        <span id="userEmail" class="text-yellow-400"></span>
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="glass p-6 rounded-3xl">
+        <p class="text-gray-400 mb-2">Account Balance</p>
+        <h3 class="text-4xl font-bold text-yellow-400">$0.00</h3>
+      </div>
+
+      <div class="glass p-6 rounded-3xl">
+        <p class="text-gray-400 mb-2">Selected Plan</p>
+        <h3 id="planDisplay" class="text-4xl font-bold text-yellow-400">None</h3>
+      </div>
+
+      <div class="glass p-6 rounded-3xl">
+        <p class="text-gray-400 mb-2">Status</p>
+        <h3 class="text-4xl font-bold text-green-400">Active</h3>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    const email = localStorage.getItem("userEmail");
+    document.getElementById("userEmail").textContent = email;
+
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get("plan");
+
+    if(plan){
+      document.getElementById("planDisplay").textContent = "$" + plan;
+    }
+
+    function logout(){
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("userEmail");
+
+      window.location.href = "login.html";
+    }
+  </script>
 
 </body>
 </html>
