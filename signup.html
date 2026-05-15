@@ -161,15 +161,19 @@ document.getElementById("signup-btn").addEventListener("click", async () => {
       await createUserWithEmailAndPassword(auth, email, password);
 
     // 🔥 FIRESTORE USER PROFILE (UPDATED STRUCTURE)
-    await setDoc(doc(db, "users", userCredential.user.uid), {
+   await setDoc(doc(db, "users", userCredential.user.uid), {
 
-      email: userCredential.user.email,
-      plan: 0,
-      status: "active",
-      progress: 0,
-      createdAt: new Date().toISOString()
+  email: userCredential.user.email,
+  plan: 0,
+  status: "active",
+  progress: 0,
 
-    });
+  // NEW FIELD (STEP 1)
+  challenge: null,
+
+  createdAt: new Date().toISOString()
+
+});
 
     window.location.href = "profile.html";
 
