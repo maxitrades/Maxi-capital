@@ -1,29 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Maxi Capital</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      background:#050505;
+      color:white;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .gold{
+      color:#d4af37;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-gold{
+      background:#d4af37;
+      color:black;
+      transition:0.3s;
+    }
+
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      opacity:0.9;
+    }
+  </style>
 </head>
 
-<body style="background:#0a0a0a; color:white; font-family:Arial; padding:40px;">
+<body>
 
-<h1>User Profile</h1>
+<!-- NAV -->
+<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
 
-<p><strong>Email:</strong> <span id="email">Loading...</span></p>
-<p><strong>Status:</strong> Registered User</p>
+  <h1 class="text-2xl font-bold tracking-wider">
+    MAXI <span class="gold">CAPITAL</span>
+  </h1>
 
-<h2 id="plan">Loading plan...</h2>
+  <div class="hidden md:flex gap-8 text-sm">
 
-<button onclick="location.href='dashboard.html'"
-style="padding:10px 18px; background:gold; border:none; cursor:pointer;">
-Go to Dashboard
-</button>
+    <a href="index.html" class="hover:text-yellow-400">Home</a>
+    <a href="challenges.html" class="hover:text-yellow-400">Challenges</a>
+    <a href="dashboard.html" class="hover:text-yellow-400">Dashboard</a>
+    <a href="login.html" class="hover:text-yellow-400">Logout</a>
 
-<button onclick="location.href='logout.html'"
-style="padding:10px 18px; background:red; border:none; cursor:pointer; margin-left:10px;">
-Logout
-</button>
+  </div>
 
+</nav>
+
+<!-- PROFILE -->
+<section class="px-8 lg:px-20 py-20">
+
+  <p class="gold uppercase tracking-[4px] text-sm">
+    Trader Profile
+  </p>
+
+  <h1 class="text-5xl font-bold mt-5">
+    Your Account Overview
+  </h1>
+
+  <!-- GRID -->
+  <div class="grid lg:grid-cols-3 gap-8 mt-16">
+
+    <!-- USER INFO -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-2xl font-bold mb-6">Account Info</h2>
+
+      <p class="text-gray-400 text-sm">Email</p>
+      <p id="email" class="text-xl font-semibold mt-1 mb-6">Loading...</p>
+
+      <p class="text-gray-400 text-sm">Selected Plan</p>
+      <p id="plan" class="text-3xl font-bold gold mt-1">$0</p>
+
+    </div>
+
+    <!-- STATUS -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-2xl font-bold mb-6">Status</h2>
+
+      <div class="space-y-6">
+
+        <div>
+          <p class="text-gray-400 text-sm">Account State</p>
+          <p class="text-green-400 text-xl font-bold">Active</p>
+        </div>
+
+        <div>
+          <p class="text-gray-400 text-sm">Verification</p>
+          <p class="text-yellow-400 text-xl font-bold">Pending</p>
+        </div>
+
+        <div>
+          <p class="text-gray-400 text-sm">Risk Level</p>
+          <p class="text-white text-xl font-bold">Standard</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="glass p-8 rounded-3xl">
+
+      <h2 class="text-2xl font-bold mb-6">Challenge Progress</h2>
+
+      <p class="text-gray-400 text-sm">Progress to funded account</p>
+
+      <div class="w-full bg-white/10 rounded-full h-4 mt-4">
+        <div class="bg-yellow-400 h-4 rounded-full" style="width:45%"></div>
+      </div>
+
+      <p class="mt-4 text-gray-400 text-sm">
+        45% completed
+      </p>
+
+      <button class="btn-gold w-full mt-10 py-4 rounded-2xl font-bold">
+        Continue Challenge
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -31,12 +143,19 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
+
+  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
+
   authDomain: "maxi-capital.firebaseapp.com",
+
   projectId: "maxi-capital",
+
   storageBucket: "maxi-capital.firebasestorage.app",
+
   messagingSenderId: "496545084482",
+
   appId: "1:496545084482:web:689f942d3d02aec99169db"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -55,12 +174,8 @@ onAuthStateChanged(auth, async (user) => {
   const snap = await getDoc(doc(db, "users", user.uid));
 
   if (snap.exists()) {
-    const data = snap.data();
     document.getElementById("plan").textContent =
-      "Selected Plan: $" + data.plan;
-  } else {
-    document.getElementById("plan").textContent =
-      "No Plan Found";
+      "$" + snap.data().plan;
   }
 
 });
