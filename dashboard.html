@@ -13,13 +13,106 @@
 <body class="bg-black text-white min-h-screen">
 
   <!-- AUTH CHECK -->
-  <script>
-    const loggedIn = localStorage.getItem("loggedIn");
+ <script>
+  const email = localStorage.getItem("userEmail");
+  document.getElementById("userEmail").textContent = email;
 
-    if (loggedIn !== "true") {
-      window.location.href = "login.html";
+  // =========================
+  // ACCOUNT STATE (SIMULATED)
+  // =========================
+  let accountSize = 10000;
+  let equity = 10000;
+  let trades = [];
+
+  // UI elements
+  const equityEl = document.getElementById("equity");
+  const progressText = document.getElementById("progressText");
+  const progressBar = document.getElementById("progressBar");
+  const phaseEl = document.getElementById("phase");
+
+  // =========================
+  // UPDATE DASHBOARD
+  // =========================
+  function updateUI() {
+    let profitPercent = ((equity - accountSize) / accountSize) * 100;
+
+    equityEl.textContent = "$" + equity.toFixed(2);
+    progressText.textContent = profitPercent.toFixed(2) + "%";
+
+    // progress toward 8%
+    let progress = (profitPercent / 8) * 100;
+    progressBar.style.width = Math.min(progress, 100) + "%";
+
+    // phase logic
+    if (profitPercent >= 8) {
+      phaseEl.textContent = "Phase Completed ✔";
+      phaseEl.classList.add("text-green-400");
+    } else {
+      phaseEl.textContent = "Phase 1";
     }
-  </script>
+  }
+
+  // =========================
+  // TRADE FUNCTION
+  // =========================
+  function openTrade(type) {
+    let risk = 50; // fixed risk per trade (prototype)
+    let result = Math.random();
+
+    let pnl = 0;
+
+    if (result > 0.5) {
+      pnl = risk; // win
+    } else {
+      pnl = -risk; // loss
+    }
+
+    equity += pnl;
+
+    trades.push({
+      type,
+      pnl,
+      balance: equity
+    });
+
+    updateUI();
+    renderTrades();
+  }
+
+  // =========================
+  // TRADE HISTORY
+  // =========================
+  function renderTrades() {
+    let container = document.getElementById("tradeList");
+
+    container.innerHTML = "";
+
+    trades.slice().reverse().forEach((t, index) => {
+
+      let color = t.pnl >= 0 ? "text-green-400" : "text-red-400";
+
+      container.innerHTML += `
+        <div class="flex justify-between border-b border-zinc-800 py-2">
+          <span>${t.type}</span>
+          <span class="${color}">
+            ${t.pnl >= 0 ? "+" : ""}${t.pnl}
+          </span>
+        </div>
+      `;
+    });
+  }
+
+  // =========================
+  // LOGOUT
+  // =========================
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("userEmail");
+    window.location.href = "login.html";
+  }
+
+  updateUI();
+</script>
 
   <!-- HEADER -->
   <header class="border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
