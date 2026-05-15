@@ -205,14 +205,14 @@ document.getElementById("signup-btn").addEventListener("click", async () => {
         email,
         password
       );
-
-    await setDoc(
-      doc(db, "users", userCredential.user.uid),
-      {
-        email: userCredential.user.email,
-        plan: plan
-      }
-    );
+await setDoc(doc(db, "users", userCredential.user.uid), {
+  email: userCredential.user.email,
+  plan: plan,
+  status: "active",
+  createdAt: new Date().toISOString(),
+  progress: 0
+});
+    
 
     window.location.href = "dashboard.html";
 
