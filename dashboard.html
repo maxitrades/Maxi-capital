@@ -4,33 +4,38 @@
   <title>Dashboard</title>
 
   <script type="module">
-   import { auth, db } from "./firebase.js";
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  import { auth, db } from "./firebase.js";
 
-    onAuthStateChanged(auth, async (user) => {
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      const snap = await getDoc(doc(db, "users", user.uid));
+onAuthStateChanged(auth, async (user) => {
 
-      if (!snap.exists()) return;
+  if (!user) {
 
-      const data = snap.data();
+    window.location.href = "login.html";
+    return;
 
-      document.getElementById("email").innerText = data.email;
-      document.getElementById("challenge").innerText = data.challenge || "Not Selected";
-      document.getElementById("plan").innerText = "$" + (data.plan || 0);
+  }
 
-      if (!data.challenge) {
-        document.getElementById("warning").style.display = "block";
-      }
+  const snap = await getDoc(doc(db, "users", user.uid));
 
-    });
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  document.getElementById("email").innerText = data.email;
+
+  document.getElementById("challenge").innerText =
+    data.challenge || "Not Selected";
+
+});
   </script>
 </head>
 
