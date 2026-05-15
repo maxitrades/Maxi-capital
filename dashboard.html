@@ -5,15 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Dashboard | Maxi Capital</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
-</head>
-
-<body class="bg-black text-white min-h-screen">
-
-  <!-- AUTH CHECK -->
- <script>
+<script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
   const email = localStorage.getItem("userEmail");
   document.getElementById("userEmail").textContent = email;
 
