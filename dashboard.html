@@ -130,7 +130,39 @@
 
   <!-- MAIN -->
   <main class="max-w-7xl mx-auto p-6 space-y-6">
+<div class="glass p-8 rounded-3xl">
 
+  <h2 class="text-2xl font-bold text-yellow-400 mb-4">
+    Trade Simulator
+  </h2>
+
+  <p class="text-gray-400 mb-4">
+    Test trading performance (demo system)
+  </p>
+
+  <div class="flex gap-4 mb-6">
+
+    <button onclick="openTrade('BUY')"
+      class="bg-green-500 px-6 py-3 rounded-xl font-bold hover:bg-green-400">
+      BUY
+    </button>
+
+    <button onclick="openTrade('SELL')"
+      class="bg-red-500 px-6 py-3 rounded-xl font-bold hover:bg-red-400">
+      SELL
+    </button>
+
+  </div>
+
+  <h3 class="text-lg font-bold mb-2 text-white">
+    Trade History
+  </h3>
+
+  <div id="tradeList" class="text-sm text-gray-300 space-y-2">
+
+  </div>
+
+</div>
     <!-- USER INFO -->
     <div class="glass p-8 rounded-3xl">
 
