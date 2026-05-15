@@ -1,161 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Challenges - Maxi Capital</title>
+  <title>Challenges</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, updateDoc } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <style>
-    body{
-      background:#050505;
-      color:white;
-      font-family:Arial;
-    }
+    const firebaseConfig = {
+      apiKey: "AIzaSyACHSsLJF...",
+      authDomain: "maxi-capital.firebaseapp.com",
+      projectId: "maxi-capital"
+    };
 
-    .gold{ color:#d4af37; }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    .glass{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      backdrop-filter:blur(10px);
-    }
+    let currentUser = null;
 
-    .btn-gold{
-      background:#d4af37;
-      color:black;
-      font-weight:bold;
-      transition:0.3s;
-    }
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      if (!user) window.location.href = "login.html";
+    });
 
-    .btn-gold:hover{
-      transform:translateY(-2px);
-      opacity:0.9;
-    }
-  </style>
+    window.selectChallenge = async (challenge) => {
+
+      if (!currentUser) {
+        alert("Login first");
+        return;
+      }
+
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        challenge,
+        progress: 0
+      });
+
+      window.location.href = "dashboard.html";
+    };
+  </script>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="flex justify-between px-8 py-6 border-b border-white/10">
-  <h1 class="text-2xl font-bold">
-    MAXI <span class="gold">CAPITAL</span>
-  </h1>
+  <h1>Choose Challenge</h1>
 
-  <div class="flex gap-6 text-sm">
-    <a href="index.html">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="profile.html">Profile</a>
-    <a href="login.html">Login</a>
-  </div>
-</nav>
-
-<!-- SECTION -->
-<section class="px-8 py-20">
-
-  <h1 class="text-4xl font-bold">Choose Your Challenge</h1>
-  <p class="text-gray-400 mt-3">
-    Select a funded account and start your evaluation.
-  </p>
-
-  <!-- CARDS -->
-  <div class="grid md:grid-cols-3 gap-8 mt-12">
-
-    <!-- 10K -->
-    <div class="glass p-8 rounded-3xl">
-      <h2 class="text-3xl font-bold">$10K</h2>
-      <p class="text-gray-400 mt-2">Beginner funded account</p>
-
-      <h3 class="gold text-4xl font-bold mt-6">$99</h3>
-
-      <button onclick="selectChallenge('$10K')"
-        class="btn-gold w-full py-3 mt-6 rounded-xl">
-        Start Challenge
-      </button>
-    </div>
-
-    <!-- 50K -->
-    <div class="glass p-8 rounded-3xl border border-yellow-500/30">
-      <h2 class="text-3xl font-bold">$50K</h2>
-      <p class="text-gray-400 mt-2">Intermediate traders</p>
-
-      <h3 class="gold text-4xl font-bold mt-6">$299</h3>
-
-      <button onclick="selectChallenge('$50K')"
-        class="btn-gold w-full py-3 mt-6 rounded-xl">
-        Start Challenge
-      </button>
-    </div>
-
-    <!-- 100K -->
-    <div class="glass p-8 rounded-3xl">
-      <h2 class="text-3xl font-bold">$100K</h2>
-      <p class="text-gray-400 mt-2">Elite traders</p>
-
-      <h3 class="gold text-4xl font-bold mt-6">$499</h3>
-
-      <button onclick="selectChallenge('$100K')"
-        class="btn-gold w-full py-3 mt-6 rounded-xl">
-        Start Challenge
-      </button>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FIREBASE -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
-  authDomain: "maxi-capital.firebaseapp.com",
-  projectId: "maxi-capital",
-  storageBucket: "maxi-capital.firebasestorage.app",
-  messagingSenderId: "496545084482",
-  appId: "1:496545084482:web:689f942d3d02aec99169db"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// MAIN FUNCTION
-window.selectChallenge = async (challenge) => {
-
-  const user = auth.currentUser;
-
-  if (!user) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  try {
-
-    const ref = doc(db, "users", user.uid);
-
-    await updateDoc(ref, {
-      challenge: challenge,
-      progress: 0
-    });
-
-    alert("Challenge selected: " + challenge);
-
-    window.location.href = "dashboard.html";
-
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-</script>
+  <button onclick="selectChallenge('$10K')">Start $10K</button>
+  <button onclick="selectChallenge('$50K')">Start $50K</button>
+  <button onclick="selectChallenge('$100K')">Start $100K</button>
 
 </body>
 </html>
