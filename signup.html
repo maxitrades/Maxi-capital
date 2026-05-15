@@ -39,6 +39,7 @@
       background:#111;
       border:1px solid rgba(255,255,255,0.08);
       outline:none;
+      color:white;
     }
 
     input:focus{
@@ -49,26 +50,18 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
+<!-- NAV -->
+<nav class="flex justify-between px-8 py-6 border-b border-white/10">
 
   <h1 class="text-2xl font-bold tracking-wider">
     MAXI <span class="gold">CAPITAL</span>
   </h1>
 
-  <div class="hidden md:flex gap-8 text-sm">
+  <div class="flex gap-6 text-sm">
 
-    <a href="index.html" class="hover:text-yellow-400">
-      Home
-    </a>
-
-    <a href="challenges.html" class="hover:text-yellow-400">
-      Challenges
-    </a>
-
-    <a href="login.html" class="hover:text-yellow-400">
-      Login
-    </a>
+    <a href="index.html" class="hover:text-yellow-400">Home</a>
+    <a href="challenges.html" class="hover:text-yellow-400">Challenges</a>
+    <a href="login.html" class="hover:text-yellow-400">Login</a>
 
   </div>
 
@@ -83,26 +76,13 @@
       Funded Trader Registration
     </p>
 
-    <h1 class="text-5xl font-bold mt-6 leading-tight">
-      Create Your Account
+    <h1 class="text-5xl font-bold mt-6">
+      Create Account
     </h1>
 
-    <p class="text-gray-400 mt-6 text-lg">
-      Begin your journey with Maxi Capital and access funded trading opportunities.
+    <p class="text-gray-400 mt-6">
+      Start your funded trading journey
     </p>
-
-    <!-- PLAN -->
-    <div class="glass mt-10 p-6 rounded-2xl">
-
-      <p class="text-gray-400 text-sm">
-        Selected Challenge
-      </p>
-
-      <h2 id="selected-plan" class="text-4xl font-bold mt-3 gold">
-        Loading...
-      </h2>
-
-    </div>
 
     <!-- FORM -->
     <div class="mt-10 space-y-6">
@@ -110,14 +90,14 @@
       <input
         type="email"
         id="email"
-        placeholder="Enter your email"
+        placeholder="Email"
         class="w-full px-5 py-4 rounded-2xl"
       />
 
       <input
         type="password"
         id="password"
-        placeholder="Create password"
+        placeholder="Password"
         class="w-full px-5 py-4 rounded-2xl"
       />
 
@@ -134,10 +114,7 @@
 
     <p class="text-gray-400 mt-8 text-center">
       Already have an account?
-
-      <a href="login.html" class="gold hover:text-yellow-400">
-        Login
-      </a>
+      <a href="login.html" class="gold">Login</a>
     </p>
 
   </div>
@@ -161,58 +138,38 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
-
   authDomain: "maxi-capital.firebaseapp.com",
-
   projectId: "maxi-capital",
-
   storageBucket: "maxi-capital.firebasestorage.app",
-
   messagingSenderId: "496545084482",
-
   appId: "1:496545084482:web:689f942d3d02aec99169db"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
-
-const params = new URLSearchParams(window.location.search);
-
-const plan = params.get("plan");
-
-document.getElementById("selected-plan").textContent =
-  plan ? "$" + plan + " Challenge" : "No Challenge";
 
 document.getElementById("signup-btn").addEventListener("click", async () => {
 
-  const email =
-    document.getElementById("email").value;
-
-  const password =
-    document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   try {
 
     const userCredential =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-await setDoc(doc(db, "users", userCredential.user.uid), {
-  email: userCredential.user.email,
-  plan: plan,
-  status: "active",
-  createdAt: new Date().toISOString(),
-  progress: 0
-});
-    
+      await createUserWithEmailAndPassword(auth, email, password);
+
+    // 🔥 FIRESTORE USER PROFILE (UPDATED STRUCTURE)
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+
+      email: userCredential.user.email,
+      plan: 0,
+      status: "active",
+      progress: 0,
+      createdAt: new Date().toISOString()
+
+    });
 
     window.location.href = "dashboard.html";
 
