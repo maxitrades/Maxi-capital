@@ -3,141 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - Maxi Capital</title>
+  <title>Dashboard</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  <style>
-    body{
-      background:#050505;
-      color:white;
-      font-family:Arial;
-    }
+    import { getFirestore, doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    .gold{ color:#d4af37; }
+    const firebaseConfig = {
+      apiKey: "AIzaSyACHSsLJF...",
+      authDomain: "maxi-capital.firebaseapp.com",
+      projectId: "maxi-capital",
+      storageBucket: "maxi-capital.appspot.com",
+      messagingSenderId: "496545084482",
+      appId: "1:496545084482:web:689f942d3d02aec99169db"
+    };
 
-    .glass{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      backdrop-filter:blur(10px);
-    }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    .btn-gold{
-      background:#d4af37;
-      color:black;
-      font-weight:bold;
-    }
-  </style>
+    setPersistence(auth, browserLocalPersistence);
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+
+      if (!snap.exists()) return;
+
+      const data = snap.data();
+
+      document.getElementById("email").textContent = data.email;
+      document.getElementById("plan").textContent = "$" + (data.plan || 0);
+      document.getElementById("challenge").textContent = data.challenge || "Not Selected";
+
+      if (!data.challenge) {
+        document.getElementById("warning").style.display = "block";
+      }
+
+    });
+  </script>
 </head>
 
-<body>
+<body style="background:#050505;color:white;font-family:Arial;padding:40px;">
 
-<!-- NAV -->
-<nav class="flex justify-between px-8 py-6 border-b border-white/10">
-  <h1 class="text-2xl font-bold">
-    MAXI <span class="gold">CAPITAL</span>
-  </h1>
+  <h1>Dashboard</h1>
 
-  <div class="flex gap-6 text-sm">
-    <a href="index.html">Home</a>
-    <a href="challenges.html">Challenges</a>
-    <a href="profile.html">Profile</a>
-    <a href="login.html">Logout</a>
+  <p>Email: <span id="email"></span></p>
+
+  <p>Account Size: <span id="plan"></span></p>
+
+  <p>Challenge: <span id="challenge"></span></p>
+
+  <div id="warning" style="display:none;color:red;margin-top:20px;">
+    No challenge selected. Go choose one.
+    <br><br>
+    <a href="challenges.html" style="color:#d4af37;">Go to Challenges</a>
   </div>
-</nav>
-
-<!-- MAIN -->
-<section class="px-8 py-16">
-
-  <h1 class="text-4xl font-bold">Dashboard</h1>
-
-  <!-- INFO GRID -->
-  <div class="grid md:grid-cols-3 gap-6 mt-10">
-
-    <!-- ACCOUNT -->
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Account Size</p>
-      <h2 id="plan" class="text-3xl gold mt-2">$0</h2>
-    </div>
-
-    <!-- CHALLENGE -->
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Active Challenge</p>
-      <h2 id="challenge" class="text-3xl gold mt-2">Not Selected</h2>
-    </div>
-
-    <!-- STATUS -->
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Status</p>
-      <h2 class="text-green-400 text-2xl mt-2">Active</h2>
-    </div>
-
-  </div>
-
-  <!-- WARNING -->
-  <div id="noChallenge" class="glass p-6 rounded-2xl mt-8 hidden border border-red-500/40">
-    <p class="text-red-400 font-semibold">
-      No challenge selected yet.
-    </p>
-
-    <a href="challenges.html" class="btn-gold inline-block mt-4 px-6 py-3 rounded-xl">
-      Choose Challenge
-    </a>
-  </div>
-
-</section>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJF...",
-  authDomain: "maxi-capital.firebaseapp.com",
-  projectId: "maxi-capital",
-  storageBucket: "maxi-capital.appspot.com",
-  messagingSenderId: "496545084482",
-  appId: "1:496545084482:web:689f942d3d02aec99169db"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-onAuthStateChanged(auth, async (user) => {
-
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  const ref = doc(db, "users", user.uid);
-  const snap = await getDoc(ref);
-
-  if (snap.exists()) {
-
-    const data = snap.data();
-
-    // ACCOUNT
-    document.getElementById("plan").textContent =
-      "$" + (data.plan || 0);
-
-    // CHALLENGE
-    document.getElementById("challenge").textContent =
-      data.challenge || "Not Selected";
-
-    // WARNING STATE
-    if (!data.challenge) {
-      document.getElementById("noChallenge").classList.remove("hidden");
-    }
-
-  }
-
-});
-
-</script>
 
 </body>
 </html>
