@@ -3,28 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile - Maxi Capital</title>
+  <title>Profile</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body{
-      background:#050505;
-      color:white;
-      font-family:Arial, Helvetica, sans-serif;
-    }
+    body{ background:#050505; color:white; font-family:Arial; }
 
     .gold{ color:#d4af37; }
 
     .glass{
       background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(10px);
       border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .btn-gold{
-      background:#d4af37;
-      color:black;
+      backdrop-filter:blur(10px);
     }
   </style>
 </head>
@@ -33,9 +24,9 @@
 
 <!-- NAV -->
 <nav class="flex justify-between px-8 py-6 border-b border-white/10">
-  <h1 class="text-xl font-bold">MAXI <span class="gold">CAPITAL</span></h1>
+  <h1>MAXI <span class="gold">CAPITAL</span></h1>
 
-  <div class="flex gap-6 text-sm">
+  <div class="flex gap-5 text-sm">
     <a href="index.html">Home</a>
     <a href="challenges.html">Challenges</a>
     <a href="dashboard.html">Dashboard</a>
@@ -51,24 +42,31 @@
 
     <div class="glass p-6 rounded-2xl">
       <p class="text-gray-400">Email</p>
-      <h2 id="email" class="text-xl mt-2">Loading...</h2>
+      <h2 id="email" class="text-lg mt-2">Loading...</h2>
     </div>
 
     <div class="glass p-6 rounded-2xl">
       <p class="text-gray-400">Plan</p>
-      <h2 id="plan" class="text-3xl gold mt-2">$0</h2>
+      <h2 id="plan" class="text-3xl gold">$0</h2>
     </div>
 
     <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Status</p>
-      <h2 class="text-green-400 text-xl mt-2">Active</h2>
+      <p class="text-gray-400">Progress</p>
+
+      <div class="w-full bg-white/10 h-3 rounded-full mt-3">
+        <div id="progressBar" class="bg-yellow-400 h-3 rounded-full" style="width:0%"></div>
+      </div>
+
+      <p id="progressText" class="text-sm text-gray-400 mt-3">
+        0% completed
+      </p>
+
     </div>
 
   </div>
 
 </section>
 
-<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -88,7 +86,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// AUTH PROTECTION + DATA LOAD
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
@@ -101,8 +98,17 @@ onAuthStateChanged(auth, async (user) => {
   const snap = await getDoc(doc(db, "users", user.uid));
 
   if (snap.exists()) {
-    document.getElementById("plan").textContent =
-      "$" + snap.data().plan;
+
+    const data = snap.data();
+
+    document.getElementById("plan").textContent = "$" + data.plan;
+
+    const progress = data.progress || 0;
+
+    document.getElementById("progressBar").style.width = progress + "%";
+
+    document.getElementById("progressText").textContent =
+      progress + "% completed";
   }
 
 });
