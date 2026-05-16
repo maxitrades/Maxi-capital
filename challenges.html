@@ -1,119 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <title>Challenges | Maxi Capital</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Challenges</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-black text-white min-h-screen">
+<body class="bg-black text-white">
 
-  <!-- NAV -->
-  <header class="border-b border-zinc-800">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between">
+<header class="border-b border-zinc-800 p-4 flex justify-between">
+  <h1 class="text-yellow-400 font-bold">Challenges</h1>
+  <a href="dashboard.html" class="text-sm hover:text-yellow-400">Dashboard</a>
+</header>
 
-      <h1 class="text-yellow-400 font-bold text-xl">
-        Challenges
-      </h1>
+<main class="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-6">
 
-      <nav class="flex gap-4 text-sm">
-        <a href="dashboard.html" class="hover:text-yellow-400">Dashboard</a>
-        <a href="profile.html" class="hover:text-yellow-400">Profile</a>
-      </nav>
+  <div class="bg-zinc-900 p-6 rounded-xl text-center">
+    <h2 class="text-xl font-bold">$1,000 Challenge</h2>
+    <p class="text-gray-400 mt-2">Starter</p>
+    <p class="text-yellow-400 text-2xl mt-4">$3</p>
 
-    </div>
-  </header>
+    <button onclick="selectChallenge(1000,3)"
+      class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded-xl w-full">
+      Select
+    </button>
+  </div>
 
-  <!-- CONTENT -->
-  <main class="max-w-6xl mx-auto px-4 py-10">
+  <div class="bg-zinc-900 p-6 rounded-xl text-center border border-yellow-400">
+    <h2 class="text-xl font-bold">$5,000 Challenge</h2>
+    <p class="text-gray-400 mt-2">Pro</p>
+    <p class="text-yellow-400 text-2xl mt-4">$19</p>
 
-    <h2 class="text-3xl font-bold mb-8 text-yellow-400">
-      Select Your Challenge
-    </h2>
+    <button onclick="selectChallenge(5000,19)"
+      class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded-xl w-full">
+      Select
+    </button>
+  </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
+  <div class="bg-zinc-900 p-6 rounded-xl text-center">
+    <h2 class="text-xl font-bold">$10,000 Challenge</h2>
+    <p class="text-gray-400 mt-2">Elite</p>
+    <p class="text-yellow-400 text-2xl mt-4">$49</p>
 
-      <!-- 1K -->
-      <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center">
+    <button onclick="selectChallenge(10000,49)"
+      class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded-xl w-full">
+      Select
+    </button>
+  </div>
 
-        <h3 class="text-xl font-bold">$1,000 Challenge</h3>
+</main>
 
-        <p class="text-gray-400 mt-2">Beginner Account</p>
+<script>
+function selectChallenge(size, price) {
+  localStorage.setItem("activeAccount", JSON.stringify({
+    size,
+    price,
+    status: "unpaid"
+  }));
 
-        <p class="text-yellow-400 text-3xl font-bold mt-4">$3</p>
-
-        <button onclick="selectChallenge(1000, 3)"
-          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
-
-          Select
-
-        </button>
-
-      </div>
-
-      <!-- 5K -->
-      <div class="bg-zinc-900 p-6 rounded-2xl border border-yellow-400 text-center">
-
-        <h3 class="text-xl font-bold">$5,000 Challenge</h3>
-
-        <p class="text-gray-400 mt-2">Intermediate Account</p>
-
-        <p class="text-yellow-400 text-3xl font-bold mt-4">$19</p>
-
-        <button onclick="selectChallenge(5000, 19)"
-          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
-
-          Select
-
-        </button>
-
-      </div>
-
-      <!-- 10K -->
-      <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center">
-
-        <h3 class="text-xl font-bold">$10,000 Challenge</h3>
-
-        <p class="text-gray-400 mt-2">Advanced Account</p>
-
-        <p class="text-yellow-400 text-3xl font-bold mt-4">$49</p>
-
-        <button onclick="selectChallenge(10000, 49)"
-          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
-
-          Select
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- SCRIPT -->
-  <script>
-
-    function selectChallenge(size, price) {
-
-      localStorage.setItem("selectedChallenge", JSON.stringify({
-        size: size,
-        price: price
-      }));
-
-      // also set account size for dashboard
-      localStorage.setItem("accountSize", size);
-      localStorage.setItem("equity", size);
-
-      alert("Challenge selected: $" + size);
-
-      window.location.href = "dashboard.html";
-    }
-
-  </script>
+  window.location.href = "payment.html";
+}
+</script>
 
 </body>
 </html>
