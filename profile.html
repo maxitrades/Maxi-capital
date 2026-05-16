@@ -3,117 +3,261 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile</title>
+
+  <title>Profile | Maxi Capital</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    body{ background:#050505; color:white; font-family:Arial; }
-
-    .gold{ color:#d4af37; }
-
-    .glass{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      backdrop-filter:blur(10px);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body class="bg-black text-white min-h-screen">
 
-<!-- NAV -->
-<nav class="flex justify-between px-8 py-6 border-b border-white/10">
-  <h1>MAXI <span class="gold">CAPITAL</span></h1>
+  <!-- LOGIN CHECK -->
+  <script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
 
-  <div class="flex gap-5 text-sm">
-    <a href="index.html">Home</a>
-    <a href="challenges.html">challenges</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="login.html">Logout</a>
-  </div>
-</nav>
+  <!-- HEADER -->
+  <header class="border-b border-zinc-800 sticky top-0 bg-black/90 backdrop-blur z-50">
 
-<section class="px-8 py-20">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row gap-4 md:justify-between md:items-center">
 
-  <h1 class="text-4xl font-bold">Profile</h1>
+      <h1 class="text-2xl font-bold text-yellow-400">
+        Maxi Capital
+      </h1>
 
-  <div class="grid md:grid-cols-3 gap-6 mt-10">
+      <nav class="flex flex-wrap gap-4 text-sm">
 
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Email</p>
-      <h2 id="email" class="text-lg mt-2">Loading...</h2>
+        <a href="dashboard.html" class="hover:text-yellow-400 transition">
+          Dashboard
+        </a>
+
+        <a href="profile.html" class="text-yellow-400">
+          Profile
+        </a>
+
+        <a href="challenges.html" class="hover:text-yellow-400 transition">
+          Challenges
+        </a>
+
+        <a href="contact.html" class="hover:text-yellow-400 transition">
+          Support
+        </a>
+
+        <button onclick="logout()"
+          class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
+          Logout
+        </button>
+
+      </nav>
+
     </div>
 
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Plan</p>
-      <h2 id="plan" class="text-3xl gold">$0</h2>
-    </div>
+  </header>
 
-    <div class="glass p-6 rounded-2xl">
-      <p class="text-gray-400">Progress</p>
+  <!-- MAIN -->
+  <main class="max-w-5xl mx-auto px-4 md:px-6 py-10">
 
-      <div class="w-full bg-white/10 h-3 rounded-full mt-3">
-        <div id="progressBar" class="bg-yellow-400 h-3 rounded-full" style="width:0%"></div>
+    <div class="glass p-8 rounded-3xl">
+
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-10">
+
+        <div>
+          <h2 class="text-4xl font-bold mb-2">
+            Trader Profile
+          </h2>
+
+          <p class="text-gray-400">
+            Manage your account information and verification status.
+          </p>
+        </div>
+
+        <!-- KYC STATUS -->
+        <div class="bg-yellow-400/10 border border-yellow-400 px-5 py-3 rounded-2xl text-center">
+
+          <p class="text-sm text-gray-400">
+            KYC Status
+          </p>
+
+          <h3 id="kycStatus" class="text-xl font-bold text-yellow-400">
+            Pending
+          </h3>
+
+        </div>
+
       </div>
 
-      <p id="progressText" class="text-sm text-gray-400 mt-3">
-        0% completed
-      </p>
+      <!-- FORM -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- FULL NAME -->
+        <div>
+          <label class="block mb-2 text-gray-400">
+            Full Name
+          </label>
+
+          <input
+            id="fullName"
+            type="text"
+            placeholder="Enter full name"
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- EMAIL -->
+        <div>
+          <label class="block mb-2 text-gray-400">
+            Email
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- PHONE -->
+        <div>
+          <label class="block mb-2 text-gray-400">
+            Phone Number
+          </label>
+
+          <input
+            id="phone"
+            type="text"
+            placeholder="+254..."
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- COUNTRY -->
+        <div>
+          <label class="block mb-2 text-gray-400">
+            Country
+          </label>
+
+          <input
+            id="country"
+            type="text"
+            placeholder="Kenya"
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- ADDRESS -->
+        <div class="md:col-span-2">
+          <label class="block mb-2 text-gray-400">
+            Address
+          </label>
+
+          <input
+            id="address"
+            type="text"
+            placeholder="Your address"
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+        <!-- ID -->
+        <div class="md:col-span-2">
+          <label class="block mb-2 text-gray-400">
+            National ID / Passport Number
+          </label>
+
+          <input
+            id="identity"
+            type="text"
+            placeholder="ID Number"
+            class="w-full bg-zinc-900 border border-zinc-700 p-4 rounded-2xl outline-none focus:border-yellow-400"
+          />
+        </div>
+
+      </div>
+
+      <!-- SAVE -->
+      <div class="mt-10">
+
+        <button onclick="saveProfile()"
+          class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300 transition">
+
+          Save Profile
+        </button>
+
+      </div>
 
     </div>
 
-  </div>
+  </main>
 
-</section>
+  <!-- SCRIPT -->
+  <script>
 
-<script type="module">
+    // =========================
+    // LOAD SAVED DATA
+    // =========================
+    document.getElementById("email").value =
+      localStorage.getItem("userEmail") || "";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    document.getElementById("fullName").value =
+      localStorage.getItem("fullName") || "";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyACHSsLJlfFdB44aCLsNKg6yqNMZ39Erwo",
-  authDomain: "maxi-capital.firebaseapp.com",
-  projectId: "maxi-capital",
-  storageBucket: "maxi-capital.firebasestorage.app",
-  messagingSenderId: "496545084482",
-  appId: "1:496545084482:web:689f942d3d02aec99169db"
-};
+    document.getElementById("phone").value =
+      localStorage.getItem("phone") || "";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    document.getElementById("country").value =
+      localStorage.getItem("country") || "";
 
-onAuthStateChanged(auth, async (user) => {
+    document.getElementById("address").value =
+      localStorage.getItem("address") || "";
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+    document.getElementById("identity").value =
+      localStorage.getItem("identity") || "";
 
-  document.getElementById("email").textContent = user.email;
+    // =========================
+    // SAVE PROFILE
+    // =========================
+    function saveProfile() {
 
-  const snap = await getDoc(doc(db, "users", user.uid));
+      localStorage.setItem(
+        "fullName",
+        document.getElementById("fullName").value
+      );
 
-  if (snap.exists()) {
+      localStorage.setItem(
+        "phone",
+        document.getElementById("phone").value
+      );
 
-    const data = snap.data();
+      localStorage.setItem(
+        "country",
+        document.getElementById("country").value
+      );
 
-    document.getElementById("plan").textContent = "$" + data.plan;
+      localStorage.setItem(
+        "address",
+        document.getElementById("address").value
+      );
 
-    const progress = data.progress || 0;
+      localStorage.setItem(
+        "identity",
+        document.getElementById("identity").value
+      );
 
-    document.getElementById("progressBar").style.width = progress + "%";
+      alert("Profile saved successfully.");
+    }
 
-    document.getElementById("progressText").textContent =
-      progress + "% completed";
-  }
+    // =========================
+    // LOGOUT
+    // =========================
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
 
-});
-
-</script>
+  </script>
 
 </body>
 </html>
