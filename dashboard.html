@@ -1,33 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard | Maxi Capital</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white">
 
-<header class="p-4 border-b border-zinc-800 flex justify-between">
-  <h1 class="text-yellow-400">Dashboard</h1>
-  <a href="profile.html">Profile</a>
+<!-- HEADER -->
+<header class="border-b border-zinc-800 bg-black/90 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+    <h1 class="text-2xl font-bold text-yellow-400">
+      Maxi Capital
+    </h1>
+
+    <nav class="flex gap-6 text-sm">
+      <a href="dashboard.html" class="text-yellow-400">Dashboard</a>
+      <a href="challenges.html" class="hover:text-yellow-400">Challenges</a>
+      <a href="profile.html" class="hover:text-yellow-400">Profile</a>
+    </nav>
+
+  </div>
 </header>
 
-<main class="p-6 space-y-6">
+<!-- MAIN -->
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-8">
 
-<h2 id="status" class="text-xl"></h2>
+  <!-- STATUS HEADER -->
+  <section class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
 
-<div>
-  <p>Equity: <span id="equity"></span></p>
-  <p>Account: <span id="account"></span></p>
-</div>
+    <h2 id="status" class="text-2xl font-bold text-yellow-400">
+      Active Account
+    </h2>
 
-<div id="risk"></div>
+    <p class="text-gray-400 mt-2">
+      Monitor your challenge performance and risk status.
+    </p>
+
+  </section>
+
+  <!-- STATS GRID -->
+  <section class="grid md:grid-cols-3 gap-6">
+
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-gray-400 text-sm">Account Size</p>
+      <h3 id="account" class="text-3xl font-bold text-yellow-400 mt-2">$0</h3>
+    </div>
+
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-gray-400 text-sm">Equity</p>
+      <h3 id="equity" class="text-3xl font-bold text-green-400 mt-2">$0</h3>
+    </div>
+
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-gray-400 text-sm">Trades</p>
+      <h3 id="trades" class="text-3xl font-bold text-blue-400 mt-2">0</h3>
+    </div>
+
+  </section>
+
+  <!-- RISK SECTION -->
+  <section class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+
+    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+      Risk Overview
+    </h3>
+
+    <div class="space-y-2 text-sm">
+
+      <p>Max Drawdown: <span class="text-red-400">10%</span></p>
+      <p>Daily Loss Limit: <span class="text-red-400">5%</span></p>
+      <p>Profit Target: <span class="text-green-400">8%</span></p>
+
+    </div>
+
+  </section>
 
 </main>
 
 <script>
 
-const activeAccount = JSON.parse(localStorage.getItem("activeAccount"));
+const activeAccount =
+  JSON.parse(localStorage.getItem("activeAccount"));
 
 if (!activeAccount || activeAccount.status !== "active") {
   window.location.href = "payment.html";
@@ -35,8 +94,8 @@ if (!activeAccount || activeAccount.status !== "active") {
 
 let accountSize = activeAccount.size;
 let equity = parseFloat(localStorage.getItem("equity")) || accountSize;
-
 let trades = JSON.parse(localStorage.getItem("trades")) || [];
+
 let locked = false;
 
 function checkRules() {
@@ -44,24 +103,35 @@ function checkRules() {
   let profit = ((equity - accountSize) / accountSize) * 100;
   let drawdown = ((accountSize - equity) / accountSize) * 100;
 
-  if (drawdown >= 10) locked = true;
+  if (drawdown >= 10) {
+    locked = true;
+    document.getElementById("status").innerText = "ACCOUNT BLOWN ❌";
+  }
 
-  if (profit >= 8) locked = true;
+  if (profit >= 8) {
+    locked = true;
+    document.getElementById("status").innerText = "CHALLENGE PASSED ✔";
+  }
 
-  document.getElementById("status").innerText =
-    locked ? "LOCKED" : "ACTIVE";
+  if (!locked) {
+    document.getElementById("status").innerText = "Active Account";
+  }
 }
 
-function update() {
-  document.getElementById("equity").innerText = equity;
-  document.getElementById("account").innerText = accountSize;
+function updateUI() {
 
-  document.getElementById("risk").innerText =
-    "Trades: " + trades.length;
+  document.getElementById("account").innerText =
+    "$" + accountSize;
+
+  document.getElementById("equity").innerText =
+    "$" + equity.toFixed(2);
+
+  document.getElementById("trades").innerText =
+    trades.length;
 }
 
 checkRules();
-update();
+updateUI();
 
 </script>
 
