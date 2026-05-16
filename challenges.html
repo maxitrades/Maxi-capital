@@ -7,142 +7,113 @@
   <title>Challenges | Maxi Capital</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-black text-white">
+<body class="bg-black text-white min-h-screen">
 
-  <!-- HEADER -->
-  <header class="border-b border-zinc-800 sticky top-0 bg-black/90 backdrop-blur z-50">
+  <!-- NAV -->
+  <header class="border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between">
 
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-      <h1 class="text-2xl font-bold text-yellow-400">
-        Maxi Capital Challenges
+      <h1 class="text-yellow-400 font-bold text-xl">
+        Challenges
       </h1>
 
-      <nav class="flex gap-6 text-sm">
-        <a href="index.html" class="hover:text-yellow-400">Home</a>
-        <a href="challenges.html" class="text-yellow-400">Challenges</a>
-        <a href="rules.html" class="hover:text-yellow-400">Rules</a>
-        <a href="faq.html" class="hover:text-yellow-400">FAQ</a>
-        <a href="contact.html" class="hover:text-yellow-400">Contact</a>
-        <a href="login.html" class="hover:text-yellow-400">Login</a>
+      <nav class="flex gap-4 text-sm">
+        <a href="dashboard.html" class="hover:text-yellow-400">Dashboard</a>
+        <a href="profile.html" class="hover:text-yellow-400">Profile</a>
       </nav>
 
     </div>
-
   </header>
 
-  <!-- HERO -->
-  <section class="text-center py-20 px-6">
+  <!-- CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 py-10">
 
-    <h1 class="text-5xl md:text-6xl font-bold mb-6">
-      Trading Challenges
-    </h1>
+    <h2 class="text-3xl font-bold mb-8 text-yellow-400">
+      Select Your Challenge
+    </h2>
 
-    <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-      Choose a challenge, prove your trading skills, and unlock funded capital.
-    </p>
+    <div class="grid md:grid-cols-3 gap-6">
 
-  </section>
+      <!-- 1K -->
+      <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center">
 
-  <!-- CHALLENGES -->
-  <section class="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-3 gap-8">
+        <h3 class="text-xl font-bold">$1,000 Challenge</h3>
 
-    <!-- 1K -->
-    <div class="glass p-8 rounded-3xl border border-zinc-700">
+        <p class="text-gray-400 mt-2">Beginner Account</p>
 
-      <h2 class="text-2xl font-bold text-yellow-400 mb-2">
-        $1,000 Challenge
-      </h2>
+        <p class="text-yellow-400 text-3xl font-bold mt-4">$3</p>
 
-      <p class="text-gray-400 mb-6">
-        Beginner evaluation account
-      </p>
+        <button onclick="selectChallenge(1000, 3)"
+          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
 
-      <div class="space-y-2 text-gray-300 mb-6">
-        <p>✔ Profit Target: 8%</p>
-        <p>✔ Max Daily Loss: 5%</p>
-        <p>✔ Max Loss: 10%</p>
-        <p>✔ Min Trading Days: 5</p>
+          Select
+
+        </button>
+
       </div>
 
-      <h3 class="text-3xl font-bold mb-6 text-white">
-        $25
-      </h3>
+      <!-- 5K -->
+      <div class="bg-zinc-900 p-6 rounded-2xl border border-yellow-400 text-center">
 
-      <a href="signup.html?plan=1000"
-        class="block text-center bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-300">
-        Start Challenge
-      </a>
+        <h3 class="text-xl font-bold">$5,000 Challenge</h3>
+
+        <p class="text-gray-400 mt-2">Intermediate Account</p>
+
+        <p class="text-yellow-400 text-3xl font-bold mt-4">$19</p>
+
+        <button onclick="selectChallenge(5000, 19)"
+          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
+
+          Select
+
+        </button>
+
+      </div>
+
+      <!-- 10K -->
+      <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center">
+
+        <h3 class="text-xl font-bold">$10,000 Challenge</h3>
+
+        <p class="text-gray-400 mt-2">Advanced Account</p>
+
+        <p class="text-yellow-400 text-3xl font-bold mt-4">$49</p>
+
+        <button onclick="selectChallenge(10000, 49)"
+          class="mt-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold w-full">
+
+          Select
+
+        </button>
+
+      </div>
 
     </div>
 
-    <!-- 5K -->
-    <div class="glass p-8 rounded-3xl border border-yellow-400">
+  </main>
 
-      <h2 class="text-2xl font-bold text-yellow-400 mb-2">
-        $5,000 Challenge
-      </h2>
+  <!-- SCRIPT -->
+  <script>
 
-      <p class="text-gray-400 mb-6">
-        Intermediate trader account
-      </p>
+    function selectChallenge(size, price) {
 
-      <div class="space-y-2 text-gray-300 mb-6">
-        <p>✔ Profit Target: 8%</p>
-        <p>✔ Max Daily Loss: 5%</p>
-        <p>✔ Max Loss: 10%</p>
-        <p>✔ Min Trading Days: 5</p>
-      </div>
+      localStorage.setItem("selectedChallenge", JSON.stringify({
+        size: size,
+        price: price
+      }));
 
-      <h3 class="text-3xl font-bold mb-6 text-white">
-        $49
-      </h3>
+      // also set account size for dashboard
+      localStorage.setItem("accountSize", size);
+      localStorage.setItem("equity", size);
 
-      <a href="signup.html?plan=5000"
-        class="block text-center bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-300">
-        Start Challenge
-      </a>
+      alert("Challenge selected: $" + size);
 
-    </div>
+      window.location.href = "dashboard.html";
+    }
 
-    <!-- 10K -->
-    <div class="glass p-8 rounded-3xl border border-zinc-700">
-
-      <h2 class="text-2xl font-bold text-yellow-400 mb-2">
-        $10,000 Challenge
-      </h2>
-
-      <p class="text-gray-400 mb-6">
-        Advanced trader account
-      </p>
-
-      <div class="space-y-2 text-gray-300 mb-6">
-        <p>✔ Profit Target: 8%</p>
-        <p>✔ Max Daily Loss: 5%</p>
-        <p>✔ Max Loss: 10%</p>
-        <p>✔ Min Trading Days: 5</p>
-      </div>
-
-      <h3 class="text-3xl font-bold mb-6 text-white">
-        $79
-      </h3>
-
-      <a href="signup.html?plan=10000"
-        class="block text-center bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-300">
-        Start Challenge
-      </a>
-
-    </div>
-
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-zinc-800 py-8 text-center text-gray-500">
-    © 2026 Maxi Capital. All rights reserved.
-  </footer>
+  </script>
 
 </body>
 </html>
