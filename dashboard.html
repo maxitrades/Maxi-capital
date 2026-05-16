@@ -12,204 +12,449 @@
 
 <body class="bg-black text-white min-h-screen">
 
-  <!-- LOGIN GUARD -->
+  <!-- LOGIN CHECK -->
   <script>
     if (localStorage.getItem("loggedIn") !== "true") {
       window.location.href = "login.html";
     }
   </script>
 
-  <!-- HEADER -->
-  <header class="border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+  <!-- NAVBAR -->
+  <header class="border-b border-zinc-800 sticky top-0 bg-black/90 backdrop-blur z-50">
 
-    <h1 class="text-2xl font-bold text-yellow-400">
-      Maxi Capital Dashboard
-    </h1>
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-    <button onclick="logout()"
-      class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
-      Logout
-    </button>
+      <!-- LOGO -->
+      <h1 class="text-2xl font-bold text-yellow-400 text-center md:text-left">
+        Maxi Capital
+      </h1>
+
+      <!-- NAV LINKS -->
+      <nav class="flex flex-wrap justify-center items-center gap-4 text-sm">
+
+        <a href="dashboard.html"
+          class="text-yellow-400 transition">
+          Dashboard
+        </a>
+
+        <a href="profile.html"
+          class="hover:text-yellow-400 transition">
+          Profile
+        </a>
+
+        <a href="challenges.html"
+          class="hover:text-yellow-400 transition">
+          Challenges
+        </a>
+
+        <a href="faq.html"
+          class="hover:text-yellow-400 transition">
+          FAQ
+        </a>
+
+        <a href="contact.html"
+          class="hover:text-yellow-400 transition">
+          Support
+        </a>
+
+        <span class="text-gray-400 hidden md:block">
+          <span id="userEmail"></span>
+        </span>
+
+        <button onclick="logout()"
+          class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
+
+          Logout
+        </button>
+
+      </nav>
+
+    </div>
 
   </header>
 
-  <!-- MAIN -->
-  <main class="max-w-7xl mx-auto p-6 space-y-6">
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 md:px-6 py-10 space-y-8">
 
-    <!-- USER INFO -->
-    <div class="glass p-8 rounded-3xl">
+    <!-- WELCOME -->
+    <section class="glass p-8 rounded-3xl">
 
-      <h2 class="text-3xl font-bold mb-2">
-        Welcome Trader 👋
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">
+        Welcome Back Trader 👋
       </h2>
 
       <p class="text-gray-400">
-        Account: <span id="userEmail" class="text-yellow-400"></span>
+        Manage your challenge account and track your performance.
       </p>
 
-    </div>
+    </section>
 
-    <!-- METRICS -->
-    <div class="grid md:grid-cols-3 gap-6">
+    <!-- ACCOUNT METRICS -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
+      <!-- ACCOUNT SIZE -->
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Account Size</p>
-        <h3 class="text-3xl font-bold text-yellow-400" id="accountSizeText">$0</h3>
+
+        <p class="text-gray-400 mb-2">
+          Account Size
+        </p>
+
+        <h3 id="accountSizeText"
+          class="text-4xl font-bold text-yellow-400">
+
+          $0
+        </h3>
+
       </div>
 
+      <!-- EQUITY -->
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Current Equity</p>
-        <h3 class="text-3xl font-bold text-green-400" id="equity">$0</h3>
+
+        <p class="text-gray-400 mb-2">
+          Current Equity
+        </p>
+
+        <h3 id="equity"
+          class="text-4xl font-bold text-green-400">
+
+          $0
+        </h3>
+
       </div>
 
+      <!-- PHASE -->
       <div class="glass p-6 rounded-3xl">
-        <p class="text-gray-400">Phase</p>
-        <h3 class="text-3xl font-bold text-blue-400" id="phase">Phase 1</h3>
+
+        <p class="text-gray-400 mb-2">
+          Phase Status
+        </p>
+
+        <h3 id="phase"
+          class="text-4xl font-bold text-blue-400">
+
+          Phase 1
+        </h3>
+
       </div>
 
-    </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+      <!-- WIN RATE -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Win Rate
+        </p>
+
+        <h3 id="winRate"
+          class="text-3xl font-bold text-yellow-400">
+
+          0%
+        </h3>
+
+      </div>
+
+      <!-- TOTAL TRADES -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Total Trades
+        </p>
+
+        <h3 id="totalTrades"
+          class="text-3xl font-bold text-yellow-400">
+
+          0
+        </h3>
+
+      </div>
+
+      <!-- WINS -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Winning Trades
+        </p>
+
+        <h3 id="wins"
+          class="text-3xl font-bold text-green-400">
+
+          0
+        </h3>
+
+      </div>
+
+      <!-- LOSSES -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Losing Trades
+        </p>
+
+        <h3 id="losses"
+          class="text-3xl font-bold text-red-400">
+
+          0
+        </h3>
+
+      </div>
+
+    </section>
 
     <!-- PROGRESS -->
-    <div class="glass p-8 rounded-3xl">
+    <section class="glass p-8 rounded-3xl">
 
-      <h3 class="text-xl font-bold mb-4 text-yellow-400">
-        Profit Progress (Target: 8%)
-      </h3>
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-5">
 
-      <div class="w-full bg-zinc-800 rounded-full h-4">
-        <div id="progressBar"
-          class="bg-yellow-400 h-4 rounded-full"
-          style="width: 0%;">
-        </div>
+        <h3 class="text-2xl font-bold text-yellow-400">
+          Profit Progress
+        </h3>
+
+        <p class="text-gray-400">
+          Target: 8%
+        </p>
+
       </div>
 
-      <p class="text-gray-400 mt-3">
-        Current: <span id="progressText">0%</span>
+      <!-- BAR -->
+      <div class="w-full bg-zinc-800 rounded-full h-5 overflow-hidden">
+
+        <div id="progressBar"
+          class="bg-yellow-400 h-5 rounded-full transition-all duration-500"
+          style="width: 0%;">
+
+        </div>
+
+      </div>
+
+      <p class="text-gray-400 mt-4">
+        Current Progress:
+        <span id="progressText" class="text-yellow-400 font-bold">
+          0%
+        </span>
       </p>
 
-    </div>
+    </section>
 
     <!-- TRADE PANEL -->
-    <div class="glass p-8 rounded-3xl">
+    <section class="glass p-8 rounded-3xl">
 
-      <h2 class="text-2xl font-bold text-yellow-400 mb-4">
-        Trade Simulator
-      </h2>
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
 
-      <div class="flex gap-4 mb-6">
+        <div>
+          <h2 class="text-3xl font-bold text-yellow-400 mb-2">
+            Trade Simulator
+          </h2>
+
+          <p class="text-gray-400">
+            Simulate challenge trading performance.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="flex flex-col md:flex-row gap-4 mb-10">
 
         <button onclick="openTrade('BUY')"
-          class="bg-green-500 px-6 py-3 rounded-xl font-bold hover:bg-green-400">
-          BUY
+          class="bg-green-500 px-8 py-4 rounded-2xl font-bold hover:bg-green-400 transition">
+
+          BUY TRADE
         </button>
 
         <button onclick="openTrade('SELL')"
-          class="bg-red-500 px-6 py-3 rounded-xl font-bold hover:bg-red-400">
-          SELL
+          class="bg-red-500 px-8 py-4 rounded-2xl font-bold hover:bg-red-400 transition">
+
+          SELL TRADE
         </button>
 
       </div>
 
-      <h3 class="text-lg font-bold mb-2">Trade History</h3>
-      <div id="tradeList" class="text-sm text-gray-300 space-y-2"></div>
+      <!-- TRADE HISTORY -->
+      <div>
 
-    </div>
+        <h3 class="text-2xl font-bold mb-5">
+          Trade History
+        </h3>
+
+        <div id="tradeList"
+          class="space-y-3">
+
+        </div>
+
+      </div>
+
+    </section>
 
   </main>
 
+  <!-- SCRIPT -->
   <script>
 
-    // =========================
-    // USER
-    // =========================
+    // USER INFO
     const email = localStorage.getItem("userEmail");
-    document.getElementById("userEmail").textContent = email || "Guest";
 
-    // =========================
-    // ACCOUNT (FROM CHALLENGE)
-    // =========================
-    const accountSize = parseFloat(localStorage.getItem("accountSize")) || 10000;
+    document.getElementById("userEmail").textContent =
+      email || "Trader";
+
+    // ACCOUNT SIZE
+    const accountSize =
+      parseFloat(localStorage.getItem("accountSize")) || 10000;
 
     let equity = accountSize;
+
     let trades = [];
 
-    // show account size
-    document.getElementById("accountSizeText").textContent = "$" + accountSize;
+    // UI ELEMENTS
+    const equityEl =
+      document.getElementById("equity");
 
-    const equityEl = document.getElementById("equity");
-    const progressText = document.getElementById("progressText");
-    const progressBar = document.getElementById("progressBar");
-    const phaseEl = document.getElementById("phase");
+    const progressText =
+      document.getElementById("progressText");
 
-    // =========================
+    const progressBar =
+      document.getElementById("progressBar");
+
+    const phaseEl =
+      document.getElementById("phase");
+
+    const totalTradesEl =
+      document.getElementById("totalTrades");
+
+    const winsEl =
+      document.getElementById("wins");
+
+    const lossesEl =
+      document.getElementById("losses");
+
+    const winRateEl =
+      document.getElementById("winRate");
+
+    // ACCOUNT SIZE DISPLAY
+    document.getElementById("accountSizeText").textContent =
+      "$" + accountSize;
+
     // UPDATE UI
-    // =========================
     function updateUI() {
 
-      let profitPercent = ((equity - accountSize) / accountSize) * 100;
+      let profitPercent =
+        ((equity - accountSize) / accountSize) * 100;
 
-      equityEl.textContent = "$" + equity.toFixed(2);
-      progressText.textContent = profitPercent.toFixed(2) + "%";
+      equityEl.textContent =
+        "$" + equity.toFixed(2);
 
-      let progress = (profitPercent / 8) * 100;
-      progressBar.style.width = Math.min(Math.max(progress, 0), 100) + "%";
+      progressText.textContent =
+        profitPercent.toFixed(2) + "%";
 
+      let progress =
+        (profitPercent / 8) * 100;
+
+      progressBar.style.width =
+        Math.min(Math.max(progress, 0), 100) + "%";
+
+      // PHASE
       if (profitPercent >= 8) {
-        phaseEl.textContent = "Phase Completed ✔";
+
+        phaseEl.textContent =
+          "Phase Passed ✔";
+
         phaseEl.classList.add("text-green-400");
+
       } else {
-        phaseEl.textContent = "Phase 1";
-        phaseEl.classList.remove("text-green-400");
+
+        phaseEl.textContent =
+          "Phase 1";
+
       }
+
+      // ANALYTICS
+      let wins =
+        trades.filter(t => t.pnl > 0).length;
+
+      let losses =
+        trades.filter(t => t.pnl < 0).length;
+
+      let total =
+        trades.length;
+
+      let winRate =
+        total > 0 ? (wins / total) * 100 : 0;
+
+      totalTradesEl.textContent = total;
+      winsEl.textContent = wins;
+      lossesEl.textContent = losses;
+      winRateEl.textContent =
+        winRate.toFixed(0) + "%";
     }
 
-    // =========================
-    // TRADE SYSTEM
-    // =========================
+    // OPEN TRADE
     function openTrade(type) {
 
-      let risk = accountSize * 0.005; // 0.5% risk per trade
-      let result = Math.random();
+      let risk =
+        accountSize * 0.005;
 
-      let pnl = result > 0.5 ? risk : -risk;
+      let result =
+        Math.random();
+
+      let pnl =
+        result > 0.5 ? risk : -risk;
 
       equity += pnl;
 
-      trades.push({ type, pnl });
+      trades.push({
+        type,
+        pnl
+      });
 
       updateUI();
       renderTrades();
     }
 
-    // =========================
-    // TRADE HISTORY
-    // =========================
+    // RENDER TRADES
     function renderTrades() {
 
-      let container = document.getElementById("tradeList");
+      let container =
+        document.getElementById("tradeList");
+
       container.innerHTML = "";
 
       trades.slice().reverse().forEach(t => {
 
-        let color = t.pnl >= 0 ? "text-green-400" : "text-red-400";
+        let color =
+          t.pnl >= 0
+          ? "text-green-400"
+          : "text-red-400";
 
         container.innerHTML += `
-          <div class="flex justify-between border-b border-zinc-800 py-1">
-            <span>${t.type}</span>
-            <span class="${color}">
-              ${t.pnl >= 0 ? "+" : ""}${t.pnl.toFixed(2)}
-            </span>
+          <div class="flex justify-between items-center border border-zinc-800 rounded-2xl p-4 bg-zinc-900">
+
+            <div>
+              <p class="font-bold">${t.type}</p>
+              <p class="text-sm text-gray-400">
+                Simulated Trade
+              </p>
+            </div>
+
+            <div class="${color} font-bold text-lg">
+              ${t.pnl >= 0 ? "+" : ""}
+              ${t.pnl.toFixed(2)}
+            </div>
+
           </div>
         `;
       });
     }
 
-    // =========================
     // LOGOUT
-    // =========================
     function logout() {
+
       localStorage.clear();
-      window.location.href = "login.html";
+
+      window.location.href =
+        "login.html";
     }
 
     // INIT
