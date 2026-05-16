@@ -24,38 +24,15 @@
 
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
 
-      <!-- LOGO -->
-      <h1 class="text-2xl font-bold text-yellow-400 text-center md:text-left">
-        Maxi Capital
-      </h1>
+      <h1 class="text-2xl font-bold text-yellow-400">Maxi Capital</h1>
 
-      <!-- NAVIGATION -->
       <nav class="flex flex-wrap justify-center items-center gap-4 text-sm">
 
-        <a href="dashboard.html"
-          class="text-yellow-400 transition">
-          Dashboard
-        </a>
-
-        <a href="profile.html"
-          class="hover:text-yellow-400 transition">
-          Profile
-        </a>
-
-        <a href="challenges.html"
-          class="hover:text-yellow-400 transition">
-          Challenges
-        </a>
-
-        <a href="faq.html"
-          class="hover:text-yellow-400 transition">
-          FAQ
-        </a>
-
-        <a href="contact.html"
-          class="hover:text-yellow-400 transition">
-          Support
-        </a>
+        <a href="dashboard.html" class="text-yellow-400">Dashboard</a>
+        <a href="profile.html" class="hover:text-yellow-400">Profile</a>
+        <a href="challenges.html" class="hover:text-yellow-400">Challenges</a>
+        <a href="faq.html" class="hover:text-yellow-400">FAQ</a>
+        <a href="contact.html" class="hover:text-yellow-400">Support</a>
 
         <span class="text-gray-400 hidden md:block">
           <span id="userEmail"></span>
@@ -63,7 +40,6 @@
 
         <button onclick="logout()"
           class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition">
-
           Logout
         </button>
 
@@ -84,57 +60,27 @@
       </h2>
 
       <p class="text-gray-400">
-        Monitor your challenge performance and analytics.
+        Your challenge account is now active and tracking performance.
       </p>
 
     </section>
 
-    <!-- ACCOUNT CARDS -->
+    <!-- CORE STATS -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <!-- ACCOUNT SIZE -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Account Size
-        </p>
-
-        <h3 id="accountSizeText"
-          class="text-4xl font-bold text-yellow-400">
-
-          $0
-        </h3>
-
+        <p class="text-gray-400 mb-2">Account Size</p>
+        <h3 id="accountSizeText" class="text-4xl font-bold text-yellow-400">$0</h3>
       </div>
 
-      <!-- EQUITY -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Current Equity
-        </p>
-
-        <h3 id="equity"
-          class="text-4xl font-bold text-green-400">
-
-          $0
-        </h3>
-
+        <p class="text-gray-400 mb-2">Equity</p>
+        <h3 id="equity" class="text-4xl font-bold text-green-400">$0</h3>
       </div>
 
-      <!-- PHASE -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Phase Status
-        </p>
-
-        <h3 id="phase"
-          class="text-4xl font-bold text-blue-400">
-
-          Phase 1
-        </h3>
-
+        <p class="text-gray-400 mb-2">Phase</p>
+        <h3 id="phase" class="text-4xl font-bold text-blue-400">Phase 1</h3>
       </div>
 
     </section>
@@ -142,79 +88,29 @@
     <!-- ANALYTICS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
 
-      <!-- WIN RATE -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Win Rate
-        </p>
-
-        <h3 id="winRate"
-          class="text-3xl font-bold text-yellow-400">
-
-          0%
-        </h3>
-
+        <p class="text-gray-400">Win Rate</p>
+        <h3 id="winRate" class="text-3xl font-bold text-yellow-400">0%</h3>
       </div>
 
-      <!-- TOTAL TRADES -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Total Trades
-        </p>
-
-        <h3 id="totalTrades"
-          class="text-3xl font-bold text-blue-400">
-
-          0
-        </h3>
-
+        <p class="text-gray-400">Total Trades</p>
+        <h3 id="totalTrades" class="text-3xl font-bold text-blue-400">0</h3>
       </div>
 
-      <!-- DRAWDOWN -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Drawdown
-        </p>
-
-        <h3 id="drawdown"
-          class="text-3xl font-bold text-red-400">
-
-          0%
-        </h3>
-
+        <p class="text-gray-400">Drawdown</p>
+        <h3 id="drawdown" class="text-3xl font-bold text-red-400">0%</h3>
       </div>
 
-      <!-- RISK SCORE -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Risk Score
-        </p>
-
-        <h3 id="riskScore"
-          class="text-3xl font-bold text-green-400">
-
-          Low
-        </h3>
-
+        <p class="text-gray-400">Risk Score</p>
+        <h3 id="riskScore" class="text-3xl font-bold text-green-400">Low</h3>
       </div>
 
-      <!-- DAILY PNL -->
       <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Daily PnL
-        </p>
-
-        <h3 id="dailyPnL"
-          class="text-3xl font-bold text-yellow-400">
-
-          $0
-        </h3>
-
+        <p class="text-gray-400">Daily PnL</p>
+        <h3 id="dailyPnL" class="text-3xl font-bold text-yellow-400">$0</h3>
       </div>
 
     </section>
@@ -222,275 +118,148 @@
     <!-- PROGRESS -->
     <section class="glass p-8 rounded-3xl">
 
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-5">
-
-        <h3 class="text-2xl font-bold text-yellow-400">
-          Profit Progress
-        </h3>
-
-        <p class="text-gray-400">
-          Target: 8%
-        </p>
-
+      <div class="flex justify-between mb-5">
+        <h3 class="text-2xl font-bold text-yellow-400">Profit Progress</h3>
+        <p class="text-gray-400">Target: 8%</p>
       </div>
 
-      <!-- BAR -->
       <div class="w-full bg-zinc-800 rounded-full h-5 overflow-hidden">
-
-        <div id="progressBar"
-          class="bg-yellow-400 h-5 rounded-full transition-all duration-500"
-          style="width: 0%;">
-
-        </div>
-
+        <div id="progressBar" class="bg-yellow-400 h-5" style="width:0%"></div>
       </div>
 
-      <p class="text-gray-400 mt-4">
-
-        Current Progress:
-        <span id="progressText"
-          class="text-yellow-400 font-bold">
-
-          0%
-        </span>
-
+      <p class="mt-4 text-gray-400">
+        Progress:
+        <span id="progressText" class="text-yellow-400 font-bold">0%</span>
       </p>
 
     </section>
 
-    <!-- TRADING PANEL -->
+    <!-- TRADING -->
     <section class="glass p-8 rounded-3xl">
 
-      <div class="mb-8">
+      <h2 class="text-3xl font-bold text-yellow-400 mb-6">Trade Simulator</h2>
 
-        <h2 class="text-3xl font-bold text-yellow-400 mb-2">
-          Trade Simulator
-        </h2>
-
-        <p class="text-gray-400">
-          Simulate challenge trading activity.
-        </p>
-
+      <div class="flex gap-4 mb-8">
+        <button onclick="openTrade('BUY')" class="bg-green-500 px-6 py-3 rounded-xl font-bold">BUY</button>
+        <button onclick="openTrade('SELL')" class="bg-red-500 px-6 py-3 rounded-xl font-bold">SELL</button>
       </div>
 
-      <!-- BUTTONS -->
-      <div class="flex flex-col md:flex-row gap-4 mb-10">
-
-        <button onclick="openTrade('BUY')"
-          class="bg-green-500 px-8 py-4 rounded-2xl font-bold hover:bg-green-400 transition">
-
-          BUY TRADE
-        </button>
-
-        <button onclick="openTrade('SELL')"
-          class="bg-red-500 px-8 py-4 rounded-2xl font-bold hover:bg-red-400 transition">
-
-          SELL TRADE
-        </button>
-
-      </div>
-
-      <!-- TRADE HISTORY -->
-      <div>
-
-        <h3 class="text-2xl font-bold mb-5">
-          Trade History
-        </h3>
-
-        <div id="tradeList"
-          class="space-y-3">
-
-        </div>
-
-      </div>
+      <div id="tradeList" class="space-y-3"></div>
 
     </section>
 
   </main>
 
-  <!-- SCRIPT -->
   <script>
 
-    // USER EMAIL
-    const email =
-      localStorage.getItem("userEmail");
+    // USER
+    const email = localStorage.getItem("userEmail");
+    document.getElementById("userEmail").textContent = email || "Trader";
 
-    document.getElementById("userEmail").textContent =
-      email || "Trader";
-
-    // ACCOUNT SIZE
+    // ACCOUNT
     const accountSize =
       parseFloat(localStorage.getItem("accountSize")) || 10000;
 
-    let equity = accountSize;
+    let equity =
+      parseFloat(localStorage.getItem("equity")) || accountSize;
 
-    let trades = [];
+    let trades =
+      JSON.parse(localStorage.getItem("trades")) || [];
 
-    // UI ELEMENTS
-    const equityEl =
-      document.getElementById("equity");
-
-    const progressText =
-      document.getElementById("progressText");
-
-    const progressBar =
-      document.getElementById("progressBar");
-
-    const phaseEl =
-      document.getElementById("phase");
-
-    // ACCOUNT SIZE DISPLAY
     document.getElementById("accountSizeText").textContent =
       "$" + accountSize;
 
-    // UPDATE UI
+    // SAVE
+    function save() {
+      localStorage.setItem("equity", equity);
+      localStorage.setItem("trades", JSON.stringify(trades));
+    }
+
+    // UPDATE
     function updateUI() {
 
       let profitPercent =
         ((equity - accountSize) / accountSize) * 100;
 
-      // EQUITY
-      equityEl.textContent =
+      document.getElementById("equity").textContent =
         "$" + equity.toFixed(2);
 
-      // PROGRESS %
-      progressText.textContent =
+      document.getElementById("progressText").textContent =
         profitPercent.toFixed(2) + "%";
 
-      // PROGRESS BAR
       let progress =
         (profitPercent / 8) * 100;
 
-      progressBar.style.width =
+      document.getElementById("progressBar").style.width =
         Math.min(Math.max(progress, 0), 100) + "%";
 
-      // PHASE
-      if (profitPercent >= 8) {
+      document.getElementById("phase").textContent =
+        profitPercent >= 8 ? "Phase Passed ✔" : "Phase 1";
 
-        phaseEl.textContent =
-          "Phase Passed ✔";
+      let wins = trades.filter(t => t.pnl > 0).length;
+      let losses = trades.filter(t => t.pnl < 0).length;
+      let total = trades.length;
 
-        phaseEl.classList.add("text-green-400");
+      let winRate = total ? (wins / total) * 100 : 0;
 
-      } else {
+      let drawdown = ((accountSize - equity) / accountSize) * 100;
+      if (drawdown < 0) drawdown = 0;
 
-        phaseEl.textContent =
-          "Phase 1";
+      let dailyPnL = equity - accountSize;
 
-      }
-
-      // STATS
-      let wins =
-        trades.filter(t => t.pnl > 0).length;
-
-      let losses =
-        trades.filter(t => t.pnl < 0).length;
-
-      let total =
-        trades.length;
-
-      let winRate =
-        total > 0 ? (wins / total) * 100 : 0;
-
-      // DRAWDOWN
-      let drawdown =
-        ((accountSize - equity) / accountSize) * 100;
-
-      if (drawdown < 0) {
-        drawdown = 0;
-      }
-
-      // DAILY PNL
-      let dailyPnL =
-        equity - accountSize;
-
-      // RISK SCORE
       let riskScore = "Low";
+      if (drawdown > 3) riskScore = "Medium";
+      if (drawdown > 6) riskScore = "High";
 
-      if (drawdown > 3) {
-        riskScore = "Medium";
-      }
-
-      if (drawdown > 6) {
-        riskScore = "High";
-      }
-
-      // UPDATE ELEMENTS
-      document.getElementById("winRate").textContent =
-        winRate.toFixed(0) + "%";
-
-      document.getElementById("totalTrades").textContent =
-        total;
-
-      document.getElementById("drawdown").textContent =
-        drawdown.toFixed(2) + "%";
-
-      document.getElementById("riskScore").textContent =
-        riskScore;
-
-      document.getElementById("dailyPnL").textContent =
-        "$" + dailyPnL.toFixed(2);
+      document.getElementById("winRate").textContent = winRate.toFixed(0) + "%";
+      document.getElementById("totalTrades").textContent = total;
+      document.getElementById("drawdown").textContent = drawdown.toFixed(2) + "%";
+      document.getElementById("riskScore").textContent = riskScore;
+      document.getElementById("dailyPnL").textContent = "$" + dailyPnL.toFixed(2);
 
     }
 
-    // OPEN TRADE
+    // TRADE
     function openTrade(type) {
 
-      let risk =
-        accountSize * 0.005;
+      let risk = accountSize * 0.005;
+      let result = Math.random();
 
-      let result =
-        Math.random();
-
-      let pnl =
-        result > 0.5 ? risk : -risk;
+      let pnl = result > 0.5 ? risk : -risk;
 
       equity += pnl;
 
       trades.push({
         type,
-        pnl
+        pnl,
+        time: new Date().toLocaleString()
       });
 
+      save();
       updateUI();
       renderTrades();
     }
 
-    // RENDER TRADES
+    // HISTORY
     function renderTrades() {
 
-      let container =
-        document.getElementById("tradeList");
-
+      const container = document.getElementById("tradeList");
       container.innerHTML = "";
 
       trades.slice().reverse().forEach(t => {
 
-        let color =
-          t.pnl >= 0
-          ? "text-green-400"
-          : "text-red-400";
+        const color = t.pnl >= 0 ? "text-green-400" : "text-red-400";
 
         container.innerHTML += `
-          <div class="flex justify-between items-center border border-zinc-800 rounded-2xl p-4 bg-zinc-900">
+          <div class="flex justify-between p-4 border border-zinc-800 rounded-xl bg-zinc-900">
 
             <div>
-
-              <p class="font-bold">
-                ${t.type}
-              </p>
-
-              <p class="text-sm text-gray-400">
-                Simulated Trade
-              </p>
-
+              <p class="font-bold">${t.type}</p>
+              <p class="text-xs text-gray-500">${t.time}</p>
             </div>
 
-            <div class="${color} font-bold text-lg">
-
-              ${t.pnl >= 0 ? "+" : ""}
-              ${t.pnl.toFixed(2)}
-
+            <div class="${color} font-bold">
+              ${t.pnl >= 0 ? "+" : ""}${t.pnl.toFixed(2)}
             </div>
 
           </div>
@@ -500,15 +269,12 @@
 
     // LOGOUT
     function logout() {
-
       localStorage.clear();
-
-      window.location.href =
-        "index.html";
+      window.location.href = "login.html";
     }
 
-    // INIT
     updateUI();
+    renderTrades();
 
   </script>
 
