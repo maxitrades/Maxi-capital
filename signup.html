@@ -1,111 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  <meta charset="UTF-8">
   <title>Signup | Maxi Capital</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white flex items-center justify-center min-h-screen">
 
-  <div class="w-full max-w-md glass p-8 rounded-3xl">
+  <div class="bg-zinc-900 p-8 rounded-2xl w-full max-w-md space-y-4">
 
-    <h1 class="text-3xl font-bold text-yellow-400 mb-6 text-center">
+    <h1 class="text-2xl font-bold text-yellow-400 text-center">
       Create Account
     </h1>
 
-    <!-- SELECTED CHALLENGE -->
-    <div class="mb-6 text-center">
+    <input id="email" type="email" placeholder="Email"
+      class="w-full p-3 bg-black border border-zinc-700 rounded-xl">
 
-      <p class="text-gray-400 text-sm">Selected Challenge</p>
+    <input id="password" type="password" placeholder="Password"
+      class="w-full p-3 bg-black border border-zinc-700 rounded-xl">
 
-      <h2 id="selected-plan" class="text-2xl font-bold text-yellow-400">
-        Loading...
-      </h2>
+    <button onclick="signup()"
+      class="w-full bg-yellow-400 text-black py-3 rounded-xl font-bold hover:bg-yellow-300">
 
-    </div>
+      Sign Up
 
-    <!-- FORM -->
-    <input id="email"
-      type="email"
-      placeholder="Email"
-      class="w-full p-3 mb-4 rounded-xl bg-zinc-900 border border-zinc-700"
-    />
-
-    <input id="password"
-      type="password"
-      placeholder="Password"
-      class="w-full p-3 mb-6 rounded-xl bg-zinc-900 border border-zinc-700"
-    />
-
-    <button onclick="createAccount()"
-      class="w-full bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-300 transition">
-
-      Start Challenge
     </button>
 
-    <p id="error" class="text-red-500 mt-4 text-center"></p>
-
-    <div class="text-center mt-6">
-      <a href="challenges.html" class="text-gray-400 hover:text-yellow-400 text-sm">
-        ← Back to Challenges
-      </a>
-    </div>
+    <p class="text-center text-sm text-gray-400">
+      Already have an account?
+      <a href="login.html" class="text-yellow-400">Login</a>
+    </p>
 
   </div>
 
-  <script>
-    // =========================
-    // READ CHALLENGE FROM URL
-    // =========================
-    const params = new URLSearchParams(window.location.search);
-    const plan = params.get("plan");
+<script>
+function signup() {
 
-    const planDisplay = document.getElementById("selected-plan");
+  fetch("http://localhost:3000/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value
+    })
+  })
 
-    if (plan) {
-      planDisplay.textContent = "$" + plan + " Challenge";
-      localStorage.setItem("selectedChallenge", plan);
-    } else {
-      planDisplay.textContent = "No Challenge Selected";
-    }
+  .then(res => res.json())
+  .then(data => {
 
-    // =========================
-    // CREATE ACCOUNT
-    // =========================
-    function createAccount() {
+    alert("Account created successfully");
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const error = document.getElementById("error");
+    window.location.href = "login.html";
+  })
 
-      if (!email || !password) {
-        error.textContent = "Please fill all fields";
-        return;
-      }
+  .catch(err => {
+    alert("Signup failed");
+    console.log(err);
+  });
 
-      if (!plan) {
-        error.textContent = "Please select a challenge first";
-        return;
-      }
-
-      // SAVE SESSION
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("accountSize", plan);
-
-      // REDIRECT
-      window.location.href = "dashboard.html";
-    }
-
-    // auto redirect if already logged in
-    if (localStorage.getItem("loggedIn") === "true") {
-      window.location.href = "dashboard.html";
-    }
-  </script>
+}
+</script>
 
 </body>
 </html>
