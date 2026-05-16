@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Maxi Capital</title>
 
@@ -17,42 +17,75 @@
 
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
 
+      <!-- LOGO -->
       <h1 class="text-2xl font-bold text-yellow-400 text-center md:text-left">
         Maxi Capital
       </h1>
 
-      <nav class="flex flex-wrap justify-center gap-4 text-sm">
+      <!-- NAVBAR -->
+      <nav class="flex flex-wrap justify-center items-center gap-4 text-sm">
 
-        <a href="how-it-works.html" class="hover:text-yellow-400 transition">
+        <a href="how-it-works.html"
+          class="hover:text-yellow-400 transition">
           How It Works
         </a>
 
-        <a href="rules.html" class="hover:text-yellow-400 transition">
+        <a href="rules.html"
+          class="hover:text-yellow-400 transition">
           Rules
         </a>
 
-        <a href="faq.html" class="hover:text-yellow-400 transition">
+        <a href="faq.html"
+          class="hover:text-yellow-400 transition">
           FAQ
         </a>
 
-        <a href="challenges.html" class="hover:text-yellow-400 transition">
+        <a href="challenges.html"
+          class="hover:text-yellow-400 transition">
           Challenges
         </a>
 
-        <a href="login.html" class="hover:text-yellow-400 transition">
-          Login
-        </a>
-         <a href="profile.html" class="hover:text-yellow-400 transition">
-         Profile
-        </a>
-        <a href="contact.html" class="hover:text-yellow-400 transition">
+        <a href="contact.html"
+          class="hover:text-yellow-400 transition">
           Contact
         </a>
 
-        <a href="signup.html"
+        <!-- LOGGED OUT -->
+        <a id="loginLink"
+          href="login.html"
+          class="hover:text-yellow-400 transition">
+
+          Login
+        </a>
+
+        <a id="signupLink"
+          href="signup.html"
           class="bg-yellow-400 text-black px-4 py-2 rounded-xl font-semibold hover:bg-yellow-300 transition">
+
           Get Started
         </a>
+
+        <!-- LOGGED IN -->
+        <a id="dashboardLink"
+          href="dashboard.html"
+          class="hover:text-yellow-400 transition hidden">
+
+          Dashboard
+        </a>
+
+        <a id="profileLink"
+          href="profile.html"
+          class="hover:text-yellow-400 transition hidden">
+
+          Profile
+        </a>
+
+        <button id="logoutBtn"
+          onclick="logout()"
+          class="bg-red-500 px-4 py-2 rounded-xl hover:bg-red-400 transition hidden">
+
+          Logout
+        </button>
 
       </nav>
 
@@ -66,16 +99,22 @@
     <div class="max-w-4xl">
 
       <h1 class="text-4xl md:text-7xl font-bold leading-tight mb-6">
+
         Build Wealth With
-        <span class="text-yellow-400">Maxi Capital</span>
+        <span class="text-yellow-400">
+          Maxi Capital
+        </span>
+
       </h1>
 
       <p class="text-gray-400 text-base md:text-lg mb-8 max-w-2xl mx-auto">
+
         Smart trading education, funded account guidance,
         and professional growth tools.
+
       </p>
 
-      <div class="flex flex-col md:flex-row gap-4 justify-center">
+      <div class="flex flex-col md:flex-row justify-center gap-4">
 
         <a href="signup.html"
           class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300 transition">
@@ -116,10 +155,12 @@
         </p>
 
         <div class="space-y-2 text-sm text-gray-300 mb-6">
+
           <p>✔ Profit Target: 8%</p>
           <p>✔ Daily Loss: 5%</p>
           <p>✔ Max Loss: 10%</p>
           <p>✔ Min Trading Days: 5</p>
+
         </div>
 
         <p class="text-5xl font-bold text-yellow-400 mb-6">
@@ -146,10 +187,12 @@
         </p>
 
         <div class="space-y-2 text-sm text-gray-300 mb-6">
+
           <p>✔ Profit Target: 8%</p>
           <p>✔ Daily Loss: 5%</p>
           <p>✔ Max Loss: 10%</p>
           <p>✔ Min Trading Days: 5</p>
+
         </div>
 
         <p class="text-5xl font-bold text-yellow-400 mb-6">
@@ -176,10 +219,12 @@
         </p>
 
         <div class="space-y-2 text-sm text-gray-300 mb-6">
+
           <p>✔ Profit Target: 8%</p>
           <p>✔ Daily Loss: 5%</p>
           <p>✔ Max Loss: 10%</p>
           <p>✔ Min Trading Days: 5</p>
+
         </div>
 
         <p class="text-5xl font-bold text-yellow-400 mb-6">
@@ -200,8 +245,56 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-zinc-800 py-8 text-center text-gray-500 text-sm px-4">
+
     © 2026 Maxi Capital. All rights reserved.
+
   </footer>
+
+  <!-- AUTH SCRIPT -->
+  <script>
+
+    const loggedIn =
+      localStorage.getItem("loggedIn");
+
+    // ELEMENTS
+    const loginLink =
+      document.getElementById("loginLink");
+
+    const signupLink =
+      document.getElementById("signupLink");
+
+    const dashboardLink =
+      document.getElementById("dashboardLink");
+
+    const profileLink =
+      document.getElementById("profileLink");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    // LOGGED IN STATE
+    if (loggedIn === "true") {
+
+      loginLink.classList.add("hidden");
+      signupLink.classList.add("hidden");
+
+      dashboardLink.classList.remove("hidden");
+      profileLink.classList.remove("hidden");
+      logoutBtn.classList.remove("hidden");
+
+    }
+
+    // LOGOUT
+    function logout() {
+
+      localStorage.clear();
+
+      window.location.href =
+        "index.html";
+    }
+
+  </script>
 
 </body>
 </html>
+ 
