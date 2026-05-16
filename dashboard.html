@@ -22,14 +22,14 @@
   <!-- NAVBAR -->
   <header class="border-b border-zinc-800 sticky top-0 bg-black/90 backdrop-blur z-50">
 
-    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
 
       <!-- LOGO -->
       <h1 class="text-2xl font-bold text-yellow-400 text-center md:text-left">
         Maxi Capital
       </h1>
 
-      <!-- NAV LINKS -->
+      <!-- NAVIGATION -->
       <nav class="flex flex-wrap justify-center items-center gap-4 text-sm">
 
         <a href="dashboard.html"
@@ -73,7 +73,7 @@
 
   </header>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="max-w-7xl mx-auto px-4 md:px-6 py-10 space-y-8">
 
     <!-- WELCOME -->
@@ -84,12 +84,12 @@
       </h2>
 
       <p class="text-gray-400">
-        Manage your challenge account and track your performance.
+        Monitor your challenge performance and analytics.
       </p>
 
     </section>
 
-    <!-- ACCOUNT METRICS -->
+    <!-- ACCOUNT CARDS -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
       <!-- ACCOUNT SIZE -->
@@ -138,86 +138,10 @@
       </div>
 
     </section>
-<!-- ANALYTICS -->
-<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
 
-  <!-- WIN RATE -->
-  <div class="glass p-6 rounded-3xl">
+    <!-- ANALYTICS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
 
-    <p class="text-gray-400 mb-2">
-      Win Rate
-    </p>
-
-    <h3 id="winRate"
-      class="text-3xl font-bold text-yellow-400">
-
-      0%
-    </h3>
-
-  </div>
-
-  <!-- TOTAL TRADES -->
-  <div class="glass p-6 rounded-3xl">
-
-    <p class="text-gray-400 mb-2">
-      Total Trades
-    </p>
-
-    <h3 id="totalTrades"
-      class="text-3xl font-bold text-blue-400">
-
-      0
-    </h3>
-
-  </div>
-
-  <!-- DRAWDOWN -->
-  <div class="glass p-6 rounded-3xl">
-
-    <p class="text-gray-400 mb-2">
-      Drawdown
-    </p>
-
-    <h3 id="drawdown"
-      class="text-3xl font-bold text-red-400">
-
-      0%
-    </h3>
-
-  </div>
-
-  <!-- RISK SCORE -->
-  <div class="glass p-6 rounded-3xl">
-
-    <p class="text-gray-400 mb-2">
-      Risk Score
-    </p>
-
-    <h3 id="riskScore"
-      class="text-3xl font-bold text-green-400">
-
-      Low
-    </h3>
-
-  </div>
-
-  <!-- DAILY PNL -->
-  <div class="glass p-6 rounded-3xl">
-
-    <p class="text-gray-400 mb-2">
-      Daily PnL
-    </p>
-
-    <h3 id="dailyPnL"
-      class="text-3xl font-bold text-yellow-400">
-
-      $0
-    </h3>
-
-  </div>
-
-</section>
-   
       <!-- WIN RATE -->
       <div class="glass p-6 rounded-3xl">
 
@@ -241,39 +165,54 @@
         </p>
 
         <h3 id="totalTrades"
-          class="text-3xl font-bold text-yellow-400">
+          class="text-3xl font-bold text-blue-400">
 
           0
         </h3>
 
       </div>
 
-      <!-- WINS -->
+      <!-- DRAWDOWN -->
       <div class="glass p-6 rounded-3xl">
 
         <p class="text-gray-400 mb-2">
-          Winning Trades
+          Drawdown
         </p>
 
-        <h3 id="wins"
-          class="text-3xl font-bold text-green-400">
-
-          0
-        </h3>
-
-      </div>
-
-      <!-- LOSSES -->
-      <div class="glass p-6 rounded-3xl">
-
-        <p class="text-gray-400 mb-2">
-          Losing Trades
-        </p>
-
-        <h3 id="losses"
+        <h3 id="drawdown"
           class="text-3xl font-bold text-red-400">
 
-          0
+          0%
+        </h3>
+
+      </div>
+
+      <!-- RISK SCORE -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Risk Score
+        </p>
+
+        <h3 id="riskScore"
+          class="text-3xl font-bold text-green-400">
+
+          Low
+        </h3>
+
+      </div>
+
+      <!-- DAILY PNL -->
+      <div class="glass p-6 rounded-3xl">
+
+        <p class="text-gray-400 mb-2">
+          Daily PnL
+        </p>
+
+        <h3 id="dailyPnL"
+          class="text-3xl font-bold text-yellow-400">
+
+          $0
         </h3>
 
       </div>
@@ -307,28 +246,30 @@
       </div>
 
       <p class="text-gray-400 mt-4">
+
         Current Progress:
-        <span id="progressText" class="text-yellow-400 font-bold">
+        <span id="progressText"
+          class="text-yellow-400 font-bold">
+
           0%
         </span>
+
       </p>
 
     </section>
 
-    <!-- TRADE PANEL -->
+    <!-- TRADING PANEL -->
     <section class="glass p-8 rounded-3xl">
 
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+      <div class="mb-8">
 
-        <div>
-          <h2 class="text-3xl font-bold text-yellow-400 mb-2">
-            Trade Simulator
-          </h2>
+        <h2 class="text-3xl font-bold text-yellow-400 mb-2">
+          Trade Simulator
+        </h2>
 
-          <p class="text-gray-400">
-            Simulate challenge trading performance.
-          </p>
-        </div>
+        <p class="text-gray-400">
+          Simulate challenge trading activity.
+        </p>
 
       </div>
 
@@ -370,8 +311,9 @@
   <!-- SCRIPT -->
   <script>
 
-    // USER INFO
-    const email = localStorage.getItem("userEmail");
+    // USER EMAIL
+    const email =
+      localStorage.getItem("userEmail");
 
     document.getElementById("userEmail").textContent =
       email || "Trader";
@@ -397,18 +339,6 @@
     const phaseEl =
       document.getElementById("phase");
 
-    const totalTradesEl =
-      document.getElementById("totalTrades");
-
-    const winsEl =
-      document.getElementById("wins");
-
-    const lossesEl =
-      document.getElementById("losses");
-
-    const winRateEl =
-      document.getElementById("winRate");
-
     // ACCOUNT SIZE DISPLAY
     document.getElementById("accountSizeText").textContent =
       "$" + accountSize;
@@ -419,12 +349,15 @@
       let profitPercent =
         ((equity - accountSize) / accountSize) * 100;
 
+      // EQUITY
       equityEl.textContent =
         "$" + equity.toFixed(2);
 
+      // PROGRESS %
       progressText.textContent =
         profitPercent.toFixed(2) + "%";
 
+      // PROGRESS BAR
       let progress =
         (profitPercent / 8) * 100;
 
@@ -446,7 +379,7 @@
 
       }
 
-      // ANALYTICS
+      // STATS
       let wins =
         trades.filter(t => t.pnl > 0).length;
 
@@ -459,11 +392,45 @@
       let winRate =
         total > 0 ? (wins / total) * 100 : 0;
 
-      totalTradesEl.textContent = total;
-      winsEl.textContent = wins;
-      lossesEl.textContent = losses;
-      winRateEl.textContent =
+      // DRAWDOWN
+      let drawdown =
+        ((accountSize - equity) / accountSize) * 100;
+
+      if (drawdown < 0) {
+        drawdown = 0;
+      }
+
+      // DAILY PNL
+      let dailyPnL =
+        equity - accountSize;
+
+      // RISK SCORE
+      let riskScore = "Low";
+
+      if (drawdown > 3) {
+        riskScore = "Medium";
+      }
+
+      if (drawdown > 6) {
+        riskScore = "High";
+      }
+
+      // UPDATE ELEMENTS
+      document.getElementById("winRate").textContent =
         winRate.toFixed(0) + "%";
+
+      document.getElementById("totalTrades").textContent =
+        total;
+
+      document.getElementById("drawdown").textContent =
+        drawdown.toFixed(2) + "%";
+
+      document.getElementById("riskScore").textContent =
+        riskScore;
+
+      document.getElementById("dailyPnL").textContent =
+        "$" + dailyPnL.toFixed(2);
+
     }
 
     // OPEN TRADE
@@ -508,15 +475,22 @@
           <div class="flex justify-between items-center border border-zinc-800 rounded-2xl p-4 bg-zinc-900">
 
             <div>
-              <p class="font-bold">${t.type}</p>
+
+              <p class="font-bold">
+                ${t.type}
+              </p>
+
               <p class="text-sm text-gray-400">
                 Simulated Trade
               </p>
+
             </div>
 
             <div class="${color} font-bold text-lg">
+
               ${t.pnl >= 0 ? "+" : ""}
               ${t.pnl.toFixed(2)}
+
             </div>
 
           </div>
@@ -530,7 +504,7 @@
       localStorage.clear();
 
       window.location.href =
-        "login.html";
+        "index.html";
     }
 
     // INIT
