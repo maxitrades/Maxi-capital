@@ -1,154 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <title>Profile | Maxi Capital</title>
-
+  <title>Profile</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-black text-white min-h-screen">
+<body class="bg-black text-white">
 
-  <!-- NAVBAR -->
-  <header class="border-b border-zinc-800 bg-black/90 backdrop-blur">
+<header class="p-4 border-b border-zinc-800">
+  <a href="dashboard.html" class="text-yellow-400">Back</a>
+</header>
 
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+<main class="max-w-xl mx-auto p-6 space-y-4">
 
-      <h1 class="text-xl font-bold text-yellow-400">
-        Maxi Capital
-      </h1>
+<h1 class="text-2xl font-bold text-yellow-400">Profile</h1>
 
-      <nav class="flex gap-4 text-sm">
+<input id="name" placeholder="Full Name" class="w-full p-2 bg-zinc-900">
+<input id="phone" placeholder="Phone" class="w-full p-2 bg-zinc-900">
+<input id="country" placeholder="Country" class="w-full p-2 bg-zinc-900">
+<input id="idNumber" placeholder="ID Number" class="w-full p-2 bg-zinc-900">
 
-        <a href="dashboard.html" class="hover:text-yellow-400">Dashboard</a>
-        <a href="profile.html" class="text-yellow-400">Profile</a>
-        <a href="challenges.html" class="hover:text-yellow-400">Challenges</a>
+<button onclick="saveProfile()"
+  class="bg-yellow-400 text-black px-4 py-2 rounded-xl">
+  Save
+</button>
 
-      </nav>
+<h2 class="text-xl mt-6">KYC Status:</h2>
+<p id="kyc" class="text-yellow-400">Pending</p>
 
-    </div>
+</main>
 
-  </header>
+<script>
 
-  <!-- MAIN -->
-  <main class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+document.getElementById("name").value = localStorage.getItem("name") || "";
+document.getElementById("phone").value = localStorage.getItem("phone") || "";
+document.getElementById("country").value = localStorage.getItem("country") || "";
+document.getElementById("idNumber").value = localStorage.getItem("idNumber") || "";
 
-    <!-- HEADER -->
-    <section class="glass p-8 rounded-3xl">
+document.getElementById("kyc").innerText =
+localStorage.getItem("kyc") || "unverified";
 
-      <h2 class="text-3xl font-bold text-yellow-400 mb-2">
-        My Profile
-      </h2>
+function saveProfile() {
+  localStorage.setItem("name", name.value);
+  localStorage.setItem("phone", phone.value);
+  localStorage.setItem("country", country.value);
+  localStorage.setItem("idNumber", idNumber.value);
+  localStorage.setItem("kyc", "pending_review");
 
-      <p class="text-gray-400">
-        Manage your identity and verification details
-      </p>
+  alert("Saved");
+}
 
-    </section>
-
-    <!-- FORM -->
-    <section class="glass p-8 rounded-3xl space-y-4">
-
-      <input id="name" placeholder="Full Name"
-        class="w-full p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-
-      <input id="email" placeholder="Email"
-        class="w-full p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-
-      <input id="phone" placeholder="Phone Number"
-        class="w-full p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-
-      <input id="country" placeholder="Country"
-        class="w-full p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-
-      <input id="idNumber" placeholder="ID Number / Passport"
-        class="w-full p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-
-      <button onclick="saveProfile()"
-        class="bg-yellow-400 text-black px-6 py-3 rounded-xl font-bold hover:bg-yellow-300">
-
-        Save Profile
-      </button>
-
-    </section>
-
-    <!-- KYC STATUS -->
-    <section class="glass p-8 rounded-3xl text-center">
-
-      <h3 class="text-xl text-gray-400 mb-2">
-        KYC Status
-      </h3>
-
-      <h2 id="kycStatus"
-        class="text-3xl font-bold text-yellow-400">
-
-        Pending
-      </h2>
-
-      <p class="text-gray-500 mt-2">
-        Verification is simulated for prototype
-      </p>
-
-    </section>
-
-  </main>
-
-  <!-- SCRIPT -->
-  <script>
-
-    // LOAD DATA
-    document.getElementById("name").value =
-      localStorage.getItem("name") || "";
-
-    document.getElementById("email").value =
-      localStorage.getItem("userEmail") || "";
-
-    document.getElementById("phone").value =
-      localStorage.getItem("phone") || "";
-
-    document.getElementById("country").value =
-      localStorage.getItem("country") || "";
-
-    document.getElementById("idNumber").value =
-      localStorage.getItem("idNumber") || "";
-
-    let kyc = localStorage.getItem("kyc") || "Pending";
-
-    document.getElementById("kycStatus").textContent = kyc;
-
-    if (kyc === "Verified") {
-      document.getElementById("kycStatus").classList.add("text-green-400");
-    }
-
-    // SAVE PROFILE
-    function saveProfile() {
-
-      localStorage.setItem("name",
-        document.getElementById("name").value);
-
-      localStorage.setItem("userEmail",
-        document.getElementById("email").value);
-
-      localStorage.setItem("phone",
-        document.getElementById("phone").value);
-
-      localStorage.setItem("country",
-        document.getElementById("country").value);
-
-      localStorage.setItem("idNumber",
-        document.getElementById("idNumber").value);
-
-      // SIMULATED KYC
-      localStorage.setItem("kyc", "Pending");
-
-      alert("Profile saved successfully ✔");
-
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
